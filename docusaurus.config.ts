@@ -115,6 +115,9 @@ const config: Config = {
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
+  future: {
+    experimental_router: 'hash',
+  },
 };
 
 export default config;
