@@ -23,6 +23,11 @@ function HomepageHeader() {
             to="/docs/intro">
             Genie - Getting started
           </Link>
+          <Link
+            className="button button--secondary button--lg"
+            to="/adk/getting-started">
+            ADK - Getting started in 10 minutes
+          </Link>
         </div>
       </div>
     </header>
