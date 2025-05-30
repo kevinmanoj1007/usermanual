@@ -1,0 +1,11 @@
+{
+    "position": 3,
+    "label": "Basics",
+    "collapsible": true,
+    "collapsed": true,
+    "className": "red",
+    "link": {
+      "type": "generated-index",
+      "title": "The basics"
+    }
+  }
