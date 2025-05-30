@@ -17,16 +17,17 @@ function HomepageHeader() {
           {siteConfig.title}
         </Heading>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <p className="hero__subtitle">Get Started under 10 minutes</p>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg "
             to="/docs/intro">
-            Genie - Get started
+            Genie Circuits Interface
           </Link>
           <Link
             className="button button--secondary button--lg"
             to="/adk/getting-started">
-            ADK - Get started
+            Agent Development Kit (ADK)
           </Link>
         </div>
       </div>
