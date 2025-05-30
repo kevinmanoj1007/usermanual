@@ -6,15 +6,15 @@ sidebar_position: 2
 After following the [quick start](getting-started#quick-start), you should now have an agent up on the platform,
 you can see this if you click on the agent selection dialogue in the **Genie** tab of any project:
 
-![Your model in the selection dialogue](../../static/img/selecting-myagent-model.png "Model visible in the selection dialogue")
+![Your model in the selection dialogue](../static/img/selecting-myagent-model.png "Model visible in the selection dialogue")
 
 Select your model in the selection dialogue and define some valid expressions e.g.:
-![Selected model](../../static/img/selected-myagent-model.png "Selected MyAgent-model model")
-![Valid expressions](../../static/img/valid-expressions.png "Valid expressions")
+![Selected model](../static/img/selected-myagent-model.png "Selected MyAgent-model model")
+![Valid expressions](../static/img/valid-expressions.png "Valid expressions")
 
 And **start the optimization** with:
 
-![Genie Optimize button](../../static/img/genie-optimize-button.png "The Genie Optimize button")
+![Genie Optimize button](../static/img/genie-optimize-button.png "The Genie Optimize button")
 
 If you come back to the console where you started the agent, you will see something like the following:
 ```sh
