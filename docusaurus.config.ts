@@ -57,9 +57,10 @@ const config: Config = {
       },
       items: [
         {
+          type: 'docSidebar',
+          sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Platform Tutorial',
-          to: '/adk/getting-started'
+          label: 'Tutorial',
         },
         
       ],
@@ -71,12 +72,8 @@ const config: Config = {
           title: 'User Manual',
           items: [
             {
-              label: 'Platform Tutorial',
+              label: 'Tutorial',
               to: '/docs/intro',
-            },
-            {
-              label: 'ADK Documentation',
-              to: 'adk/getting-started',
             },
           ],
         },
