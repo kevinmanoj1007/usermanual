@@ -87,8 +87,12 @@ const config: Config = {
           title: 'User Manual',
           items: [
             {
-              label: 'Tutorial',
+              label: 'Platform Tutorial',
               to: '/docs/intro',
+            },
+            {
+              label: 'ADK Documentation',
+              to: '/adk/getting-started',
             },
           ],
         },
