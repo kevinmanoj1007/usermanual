@@ -45,7 +45,18 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
-
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'adk',
+        path: 'adk', // <<-- relative path from the docusaurus folder
+        routeBasePath: 'adk',
+        sidebarPath: './sidebars.ts',
+        // ... other options
+      },
+    ],
+  ],
   themeConfig: {
     // Replace with your project's social card
     image: 'TODO',
@@ -60,9 +71,13 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Platform Tutorial',
         },
-        
+        {
+          position: 'left',
+          label: 'ADK Documentation',
+          to: '/adk/getting-started',
+        },
       ],
     },
     footer: {
