@@ -9,23 +9,15 @@ const config: Config = {
   tagline: 'AI For EE',
   favicon: 'img/favicon.ico',
 
-  // Set the production url of your site here
   url: 'https://docs.genie.com',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'asterquanta', // Usually your GitHub org/user name.
-  projectName: 'documentation', // Usually your repo name.
+  organizationName: 'asterquanta',
+  projectName: 'documentation',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -50,15 +42,31 @@ const config: Config = {
       '@docusaurus/plugin-content-docs',
       {
         id: 'adk',
-        path: 'adk', // <<-- relative path from the docusaurus folder
+        path: 'adk',
         routeBasePath: 'adk',
         sidebarPath: './sidebars.ts',
-        // ... other options
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'connectors',
+        path: 'connectors',
+        routeBasePath: 'connectors',
+        sidebarPath: require.resolve('./sidebarsConnectors.ts'),
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'tools',
+        path: 'tools',
+        routeBasePath: 'tools',
+        sidebarPath: require.resolve('./sidebarsTools.ts'),
       },
     ],
   ],
   themeConfig: {
-    // Replace with your project's social card
     image: 'TODO',
     navbar: {
       title: 'Genie User Manual',
@@ -78,6 +86,20 @@ const config: Config = {
           label: 'ADK Documentation',
           to: '/adk/getting-started',
         },
+        {
+          type: 'docSidebar',
+          sidebarId: 'connectorsSidebar',
+          label: 'Connectors',
+          position: 'left',
+          docsPluginId: 'connectors',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'toolsSidebar',
+          label: 'Tools',
+          position: 'left',
+          docsPluginId: 'tools',
+        },
       ],
     },
     footer: {
@@ -94,38 +116,16 @@ const config: Config = {
               label: 'ADK Documentation',
               to: '/adk/getting-started',
             },
+            {
+              label: 'Connectors',
+              to: '/connectors/intro',
+            },
+            {
+              label: 'Tools',
+              to: '/tools/intro',
+            },
           ],
         },
-        // {
-        //   title: 'Community',
-        //   items: [
-        //     {
-        //       label: 'Stack Overflow',
-        //       href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-        //     },
-        //     {
-        //       label: 'Discord',
-        //       href: 'https://discordapp.com/invite/docusaurus',
-        //     },
-        //     {
-        //       label: 'X',
-        //       href: 'https://x.com/docusaurus',
-        //     },
-        //   ],
-        // },
-        // {
-        //   title: 'More',
-        //   items: [
-        //     {
-        //       label: 'Blog',
-        //       to: '/blog',
-        //     },
-        //     {
-        //       label: 'GitHub',
-        //       href: 'https://github.com/facebook/docusaurus',
-        //     },
-        //   ],
-        // },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Asterquanta, Inc.`,
     },

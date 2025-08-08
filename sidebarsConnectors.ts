@@ -1,0 +1,39 @@
+import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
+
+const sidebarsConnectors: SidebarsConfig = {
+  connectorsSidebar: [
+    {
+      type: 'doc',
+      id: 'intro',
+      label: 'Introduction',
+    },
+    {
+      type: 'category',
+      label: 'CDK',
+      collapsed: false,
+      items: [
+        'cdk/baseconnector',
+        'cdk/basedomain',
+        'cdk/basestartup',
+        'cdk/config',
+        'cdk/register',
+        'cdk/router',
+        'cdk/middleware',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'SimPackage',
+      collapsed: false,
+      items: [
+        'simpackage/simconnector',
+        'simpackage/simcontroller',
+        'simpackage/slim-models',
+        'simpackage/siminterface',
+        'simpackage/simulatordomain',
+      ],
+    },
+  ],
+};
+
+export default sidebarsConnectors;
