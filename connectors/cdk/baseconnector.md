@@ -5,7 +5,7 @@ The BaseConnector class is an abstract base class for building WebSocket-based c
 ## Class Definition
 
 ```python
-class BaseConnector(ABC):
+class BaseConnector(ABC): pass
 ```
 
 **Inherits from:** ABC (Abstract Base Class)
@@ -60,15 +60,11 @@ def __init__(
 
 ## Public Methods
 
-### start()
-
 ```python
 def start(self)
 ```
 
 Executes the startup routine, triggers the ON_STARTUP callback, and begins the connector's event loop using asyncio.run.
-
-### register_callback(kind: Callbacks, cb: Callable)
 
 ```python
 def register_callback(self, kind: Callbacks, cb: Callable)
@@ -76,21 +72,14 @@ def register_callback(self, kind: Callbacks, cb: Callable)
 
 Registers a user-defined callback function for a given lifecycle event type (Callbacks).
 
-### call_cb(id: Callbacks)
-
 ```python
-def call_cb(self, id: Callbacks)
+@abstractmethod
+async def receiver(self)
 ```
-
-Invokes the callback associated with the provided event type, if defined.
-
-### @abstractmethod async def receiver(self)
 
 Subclasses must implement this method. It should define how the connector receives and processes incoming messages.
 
 ## Internal Methods
-
-### _start()
 
 ```python
 async def _start(self)
@@ -105,15 +94,11 @@ Establishes WebSocket connection and begins processing loop:
 - Task cancellation
 - Reconnection on ConnectionClosed
 
-### _add_task(handle, name)
-
 ```python
 def _add_task(self, handle, name)
 ```
 
 Creates and tracks an asynchronous task.
-
-### _cleanup_tasks()
 
 ```python
 def _cleanup_tasks(self)
@@ -121,7 +106,11 @@ def _cleanup_tasks(self)
 
 Cancels all tracked async tasks.
 
-### restart_connections(error: Exception)
+```python
+def call_cb(self, id: Callbacks)
+```
+
+Invokes the callback associated with the provided event type, if defined.
 
 ```python
 async def restart_connections(self, error: Exception)
@@ -132,23 +121,17 @@ Handles unexpected connection closures. If throw_errors is enabled, re-raises th
 - Waits briefly
 - Re-establishes WebSocket and connection pool
 
-### cleanup()
-
 ```python
 async def cleanup()
 ```
 
 Cleans up all active tasks, closes WebSocket and connection pool.
 
-### _heartbeat()
-
 ```python
 async def _heartbeat()
 ```
 
 Sends a periodic heartbeat message to maintain the connection.
-
-### send_message(request: str, request_id: str, body: Any)
 
 ```python
 async def send_message(self, request, request_id, body)
@@ -165,8 +148,6 @@ Sends a structured success response over the WebSocket.
   "body": { ... }
 }
 ```
-
-### send_error(request: str, request_id: str, code: int, message: str)
 
 ```python
 async def send_error(self, request, request_id, code, message)
