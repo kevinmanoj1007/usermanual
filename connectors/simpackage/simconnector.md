@@ -21,9 +21,8 @@ def __init__(self, strategy: SimInterface, *, throw_errors=False) -> None:
 - **strategy** (SimInterface): The simulation strategy to be used for processing incoming requests.
 - **throw_errors** (bool, optional): If set to True, exceptions encountered during task processing will be re-raised. Defaults to False.
 
-### Description
+### Initializes
 
-Initializes the connector with:
 - A persistent WebSocket connection (/connector/stream)
 - Configurable runtime options
 - Startup routines
@@ -47,65 +46,35 @@ Initializes the connector with:
 
 ### on_start()
 
-```python
-def on_start(self)
-```
-
 Runs during connector startup. Checks for active runtime options and performs early-stage operations, such as executing test modes.
 
 ### check_options()
-
-```python
-def check_options(self)
-```
 
 Checks runtime options and handles special behaviors. If the "test" option is provided with sub-options (e.g., ["netlist", "simulate"]), it initializes the Testing module, runs the tests, and exits the process.
 
 ### register_simulator_callback(id: SimulatorCallbacks, cb: Callable)
 
-```python
-def register_simulator_callback(self, id: SimulatorCallbacks, cb: Callable)
-```
-
 Registers a simulator-level callback to be invoked during simulation events. The callback is associated with a unique identifier (SimulatorCallbacks).
-
-### _call_cb(id: SimulatorCallbacks, *args, **kwargs)
-
-```python
-def _call_cb(self, id: SimulatorCallbacks, *args, **kwargs)
-```
-
-Invokes a previously registered callback function, if available, for a specific simulator event.
 
 ### trigger_process()
 
-```python
-def trigger_process(self)
-```
-
 Initiates processing of a new simulation task if the system is not currently at maximum processing capacity and if the task queue is not empty.
 
-### async def receiver()
-
-```python
-async def receiver(self)
-```
+### async receiver()
 
 Asynchronous method that continuously listens for incoming WebSocket messages. On receiving a valid request and request_id, it appends the data to the task queue and triggers processing.
 
-### _proccess_request()
+## Internal Methods
 
-```python
-def _proccess_request(self)
-```
+### _call_cb(id: SimulatorCallbacks, *args, **kwargs)
+
+Invokes a previously registered callback function, if available, for a specific simulator event.
+
+### _proccess_request()
 
 Dequeues a simulation request and submits it as an asynchronous task. Each task is bound to a done callback that handles post-processing and error reporting.
 
 ### task_handler(task: Task, send_error: Callable[[int, str], Coroutine])
-
-```python
-def task_handler(self, task: Task, send_error: Callable[[int, str], Coroutine])
-```
 
 Handles the outcome of an asynchronous simulation task. If the task raises an exception, it logs the error and sends a structured error message through the WebSocket. It also updates internal task counters and triggers the next task in the queue.
 
@@ -116,12 +85,13 @@ This connector currently supports the following runtime options:
 **test**: Executes predefined simulation tests and exits.
 
 Available test sub-options:
+
 - "netlist"
 - "simulate"
 - "parameters"
 - "nets"
 
-### Example usage
+### Example Usage
 
 ```bash
 python app.py --test=simulate,nets

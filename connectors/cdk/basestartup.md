@@ -2,11 +2,15 @@
 
 This module provides a CLI-based startup routine for connector initialization, configuration management, and orchestrator registration.
 
-## Class: BaseStartup
+## Class Definition
+
+```python
+class BaseStartup:
+```
 
 A class that defines the bootstrapping logic for connector applications. It manages commands, environment validation, file-based state persistence, and connector registration with the orchestrator.
 
-### Constructor
+## Constructor
 
 ```python
 def __init__(
@@ -19,16 +23,35 @@ def __init__(
 )
 ```
 
-#### Parameters
+### Parameters
 
-- **register_data**: Data payload to be used during registration.
-- **helper_text**: A dictionary of help messages for CLI usage.
-- **commands**: Mapping of command names to their execution logic.
-- **connector_kind**: Enum indicating the type of connector.
-- **connector_options**: Dictionary of available CLI options for the connector.
-- **post_register**: Optional function to run after successful registration.
+- **register_data** (dict): Data payload to be used during registration.
+- **helper_text** (dict[str, str]): A dictionary of help messages for CLI usage.
+- **commands** (dict[str, Callable]): Mapping of command names to their execution logic.
+- **connector_kind** (ConnectorKind): Enum indicating the type of connector.
+- **connector_options** (dict[str, Option]): Dictionary of available CLI options for the connector.
+- **post_register** (Callable | None, optional): Optional function to run after successful registration.
 
-## CLI Flow Methods
+### Initializes
+
+- CLI command mapping and validation
+- Help text system for user guidance
+- Connector type and options configuration
+- Registration callback handling
+
+## Attributes
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `register_data` | dict | Data payload used during orchestrator registration |
+| `helper_text` | dict[str, str] | Help messages for CLI commands |
+| `commands` | dict[str, Callable] | Command name to execution logic mapping |
+| `connector_kind` | ConnectorKind | Type classification of the connector |
+| `connector_options` | dict[str, Option] | Available CLI configuration options |
+| `post_register` | Callable \| None | Optional callback after successful registration |
+| `storage_location` | Path | Full path to JSON persistence file |
+
+## Public Methods
 
 ### parse_args()
 
@@ -42,7 +65,11 @@ Prints a formatted error message with helpful guidance and exits the process.
 
 Displays help text for a specific command (if given) or prints all registered help sections.
 
-## Registration and Validation
+### routine()
+
+Executes the registered subroutines in sequence. This is typically invoked during startup to ensure registration, secret checks, or any additional routines run before the connector becomes active.
+
+## Internal Methods
 
 ### register(field, fields)
 
@@ -55,14 +82,6 @@ Verifies whether the stored secret matches the current configuration. If changed
 ### add_subroutine(name: str, field_default: Any, cb: Callable)
 
 Registers a custom initialization subroutine to be run during routine() execution.
-
-## Storage Management
-
-Persistent state is stored in a JSON file at:
-
-```python
-cdk_settings.data_dir/connector_storage
-```
 
 ### write_default()
 
@@ -84,21 +103,15 @@ Checks if a file exists on disk.
 
 Checks whether the persistent storage file exists and is empty.
 
-## Execution
+## Storage Management
 
-### routine()
+Persistent state is stored in a JSON file at:
 
-Executes the registered subroutines in sequence. This is typically invoked during startup to ensure registration, secret checks, or any additional routines run before the connector becomes active.
+```python
+cdk_settings.data_dir/connector_storage
+```
 
-## Constants
-
-### storage_location
-
-Defines the full path of the JSON file used to persist connector state.
-
-### help_text
-
-Contains default usage and error prompts for CLI interface.
+The storage system manages connector registration state, secrets, and custom field persistence across application restarts.
 
 ## Example Usage
 
@@ -107,3 +120,9 @@ python connector.py register --init
 ```
 
 If called without arguments, the class performs only the state-checking routine (routine()).
+
+## Dependencies
+
+- cdk.config.cdk_settings
+- cdk.constants.ConnectorKind
+- cdk.constants.Option

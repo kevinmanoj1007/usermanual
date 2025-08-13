@@ -1,30 +1,22 @@
-# config.py
+# CDKSettings
 
-This module defines and loads configuration settings required to initialize and run a connector instance in the CDK (Connector Development Kit) environment. It provides both runtime environment selection (.env or .test.env) and a dynamic way to build the orchestrator's base URL.
+The CDKSettings class defines and loads configuration settings required to initialize and run a connector instance in the CDK (Connector Development Kit) environment. It provides both runtime environment selection (.env or .test.env) and a dynamic way to build the orchestrator's base URL.
 
-## Class: CDKSettings
+## Class Definition
 
-**Inherits from:** BaseSettings | **Defined in:** core.config
+```python
+class CDKSettings(BaseSettings):
+```
+
+**Inherits from:** BaseSettings  
+**Defined in:** core.config
 
 The CDKSettings class holds all essential configuration variables for a connector, such as orchestrator address, security credentials, heartbeat settings, and runtime flags.
-
-## Attributes
-
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| secret | str | "" | Authentication token or client key used by the connector |
-| name | str | "" | Optional name for the connector instance |
-| orc_host | str | "" | Hostname or IP address of the orchestrator |
-| orc_port | int | 8080 | Port used to connect to the orchestrator |
-| heartbeat_timeout | int | 20 | Interval (in seconds) between heartbeat messages |
-| pool_size | int | 30 | Size of the WebSocket connection pool |
-| data_dir | str | .connector_data | Directory used to store connector-specific data |
-| ssl_enabled | int | 1 | Whether to use WSS (1) or WS (0) for communication |
 
 ## Constructor
 
 ```python
-def __init__(self, env_file: str)
+def __init__(self, env_file: str):
 ```
 
 Initializes the configuration from the specified environment file using the shared BaseSettings class.
@@ -33,11 +25,32 @@ Initializes the configuration from the specified environment file using the shar
 
 - **env_file** (str): The name of the environment file (.env, .test.env, etc.)
 
-## Method: base_url() -> str
+### Initializes
+
+- Configuration loading from specified environment file
+- Runtime environment selection and validation
+- Base settings inheritance and validation
+
+## Attributes
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `secret` | str | "" | Authentication token or client key used by the connector |
+| `name` | str | "" | Optional name for the connector instance |
+| `orc_host` | str | "" | Hostname or IP address of the orchestrator |
+| `orc_port` | int | 8080 | Port used to connect to the orchestrator |
+| `heartbeat_timeout` | int | 20 | Interval (in seconds) between heartbeat messages |
+| `pool_size` | int | 30 | Size of the WebSocket connection pool |
+| `data_dir` | str | .connector_data | Directory used to store connector-specific data |
+| `ssl_enabled` | int | 1 | Whether to use WSS (1) or WS (0) for communication |
+
+## Public Methods
+
+### base_url() -> str
 
 Returns the full base URL used to establish a WebSocket connection with the orchestrator.
 
-### Logic
+#### Logic
 
 - Uses `wss://` if `ssl_enabled` is truthy.
 - Constructs the URL as:
@@ -66,13 +79,13 @@ else:
 - If `TEST_ENV` is set in the environment, `.test.env` is used.
 - Otherwise, the default `.env` file is loaded.
 
-## Function: update_settings(s: CDKSettings) -> None
+### update_settings(s: CDKSettings) -> None
 
 Updates the global `cdk_settings` instance with a new configuration.
 
-### Parameters
+#### Parameters
 
-- **s**: An instance of CDKSettings that will replace the global one.
+- **s** (CDKSettings): An instance of CDKSettings that will replace the global one.
 
 ## Dependencies
 

@@ -1,17 +1,44 @@
-# BaseDomain 
+# BaseDomain
 
 The BaseDomain class provides a foundational interface and shared utilities for all connector domain implementations. It is responsible for managing WebSocket communication with clients and handling message dispatching, including both success and error responses.
 
-## Class: BaseDomain
+## Class Definition
 
-**Abstract** | Defined in: `cdk/base_domain.py`
+```python
+class BaseDomain(ABC):
+```
+
+**Inherits from:** ABC (Abstract Base Class)  
+**Defined in:** `cdk/base_domain.py`
+
+## Constructor
+
+```python
+def __init__(
+    self,
+    connection_pool: WebsocketPool,
+    thread_pool: ThreadPoolExecutor
+) -> None
+```
+
+### Parameters
+
+- **connection_pool** (WebsocketPool): A pool that manages reusable WebSocket connections.
+- **thread_pool** (ThreadPoolExecutor): A thread pool executor for handling blocking or concurrent tasks.
+
+### Initializes
+
+- WebSocket connection pool management
+- Thread pool for concurrent task execution
 
 ## Attributes
 
-- **connection_pool**: `WebsocketPool` - A pool that manages reusable WebSocket connections.
-- **thread_pool**: `ThreadPoolExecutor` - A thread pool executor for handling blocking or concurrent tasks.
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `connection_pool` | WebsocketPool | A pool that manages reusable WebSocket connections |
+| `thread_pool` | ThreadPoolExecutor | A thread pool executor for handling blocking or concurrent tasks |
 
-## Methods
+## Public Methods
 
 ### async send_message(request: str, request_id: str, body: Any)
 
@@ -63,9 +90,17 @@ Sends a structured error message in response to a failed request.
 }
 ```
 
-### Abstract Method: async call(data: Any, strategy: ConnectorSpec)
+## Required Subclass Implementation
 
-Defines the contract for processing an incoming request based on the provided connector strategy. This method **must** be implemented by all subclasses of BaseDomain.
+Any subclass of BaseDomain must implement:
+
+```python
+@abstractmethod
+async def call(data: Any, strategy: ConnectorSpec):
+    ...
+```
+
+Defines the contract for processing an incoming request based on the provided connector strategy.
 
 #### Parameters
 

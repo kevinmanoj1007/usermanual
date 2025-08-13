@@ -1,63 +1,119 @@
 # Middleware
 
-## cdk_settings.py
+This module defines the configuration settings for the CDK (Connector Development Kit) and the abstract Middleware class used to wrap request handlers, including logic to load environment-specific settings and construct the base URL for communication with the Orchestrator.
 
-This module defines the configuration settings for the CDK (Connector Development Kit), including logic to load environment-specific settings and construct the base URL for communication with the Orchestrator.
+## Class Definition: CDKSettings
 
-### Classes
+```python
+class CDKSettings(BaseSettings):
+```
 
-#### CDKSettings
+**Inherits from:** BaseSettings  
+**Defined in:** `cdk_settings.py`
 
-Inherits from BaseSettings and encapsulates configurable parameters loaded from an environment file.
+Encapsulates configurable parameters loaded from an environment file.
 
-##### Attributes
+## Constructor: CDKSettings
 
-- **secret** (str): Secret key used for authentication (default: "")
-- **name** (str): Connector name identifier (default: "")
-- **orc_host** (str): Host address of the Orchestrator service (default: "")
-- **orc_port** (int): Port used to connect to the Orchestrator (default: 8080)
-- **heartbeat_timeout** (int): Timeout (in seconds) for heartbeat communication (default: 20)
-- **pool_size** (int): Connection pool size (default: 30)
-- **data_dir** (str): Directory for storing connector-specific data (default: ".connector_data")
-- **ssl_enabled** (int): Determines whether SSL is enabled (1 for true, 0 for false)
+```python
+def __init__(self, env_file: str):
+```
 
-##### Methods
+### Parameters
 
-- **__init__(env_file: str)**: Initializes the settings from a given environment file.
-- **base_url() -> str**: Constructs and returns the WebSocket base URL used for communication with the Orchestrator. Uses `wss` if SSL is enabled, otherwise `ws`.
+- **env_file** (str): The environment file to load settings from.
 
-### Global Configuration
+### Initializes
 
-- **cdk_settings**: An instance of CDKSettings, automatically initialized using `.env` or `.test.env` based on the `TEST_ENV` environment variable.
+- Configuration loading from specified environment file
+- Environment-specific parameter validation
+- Base settings inheritance
 
-### Functions
+## Attributes: CDKSettings
 
-#### update_settings(s: CDKSettings) -> None
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `secret` | str | "" | Secret key used for authentication |
+| `name` | str | "" | Connector name identifier |
+| `orc_host` | str | "" | Host address of the Orchestrator service |
+| `orc_port` | int | 8080 | Port used to connect to the Orchestrator |
+| `heartbeat_timeout` | int | 20 | Timeout (in seconds) for heartbeat communication |
+| `pool_size` | int | 30 | Connection pool size |
+| `data_dir` | str | ".connector_data" | Directory for storing connector-specific data |
+| `ssl_enabled` | int | 1 | Determines whether SSL is enabled (1 for true, 0 for false) |
+
+## Public Methods: CDKSettings
+
+### base_url() -> str
+
+Constructs and returns the WebSocket base URL used for communication with the Orchestrator. Uses `wss` if SSL is enabled, otherwise `ws`.
+
+## Global Configuration
+
+### cdk_settings
+
+An instance of CDKSettings, automatically initialized using `.env` or `.test.env` based on the `TEST_ENV` environment variable.
+
+### update_settings(s: CDKSettings) -> None
 
 Replaces the global `cdk_settings` instance with a new one, typically used in testing or reinitialization scenarios.
 
----
-
-## middleware.py
-
-Defines the abstract Middleware class used to wrap request handlers in the CDK. Supports pre- and post-processing logic around request execution.
-
-### Classes
-
-#### Middleware
-
-Base class for implementing middleware behavior around request handling. Follows an async execution pattern.
-
-##### Constructor
+## Class Definition: Middleware
 
 ```python
-__init__(app: Callable, dispatch: Optional[Callable] = None)
+class Middleware(ABC):
 ```
 
-- **app**: The main application handler function.
-- **dispatch**: Optional override for the default dispatch method. If not provided, uses `self.dispatch`.
+**Inherits from:** ABC (Abstract Base Class)  
+**Defined in:** `middleware.py`
 
-##### Methods
+Base class for implementing middleware behavior around request handling. Follows an async execution pattern and supports pre- and post-processing logic around request execution.
 
-- **__call__(request: Request) -> Any**: Entry point for middleware execution. Calls `dispatch_fn` with the current request and the `call_next` function, which invokes the next handler in the chain.
-- **dispatch(request: Request, call_next: Callable) -> Any (abstract)**: Abstract method that must be implemented by subclasses to define custom middleware logic. Raises `NotImplementedError` if not overridden.
+## Constructor: Middleware
+
+```python
+def __init__(self, app: Callable, dispatch: Optional[Callable] = None):
+```
+
+### Parameters
+
+- **app** (Callable): The main application handler function.
+- **dispatch** (Optional[Callable]): Optional override for the default dispatch method. If not provided, uses `self.dispatch`.
+
+### Initializes
+
+- Application handler registration
+- Dispatch method configuration
+- Middleware chain setup
+
+## Attributes: Middleware
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `app` | Callable | The main application handler function |
+| `dispatch_fn` | Callable | The dispatch method used for request processing |
+
+## Public Methods: Middleware
+
+### __call__(request: Request) -> Any
+
+Entry point for middleware execution. Calls `dispatch_fn` with the current request and the `call_next` function, which invokes the next handler in the chain.
+
+## Required Subclass Implementation: Middleware
+
+Any subclass of Middleware must implement:
+
+```python
+@abstractmethod
+async def dispatch(request: Request, call_next: Callable) -> Any:
+    ...
+```
+
+Abstract method that must be implemented by subclasses to define custom middleware logic. Raises `NotImplementedError` if not overridden.
+
+## Dependencies
+
+- **BaseSettings**: Configuration base class from core settings
+- **ABC**: Abstract base class functionality
+- **Request**: Request object type for middleware processing
+- **Callable**: Type annotation for function parameters
