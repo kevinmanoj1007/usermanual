@@ -1,0 +1,73 @@
+# BaseDomain 
+
+The BaseDomain class provides a foundational interface and shared utilities for all connector domain implementations. It is responsible for managing WebSocket communication with clients and handling message dispatching, including both success and error responses.
+
+## Class: BaseDomain
+
+**Abstract** | Defined in: `cdk/base_domain.py`
+
+## Attributes
+
+- **connection_pool**: `WebsocketPool` - A pool that manages reusable WebSocket connections.
+- **thread_pool**: `ThreadPoolExecutor` - A thread pool executor for handling blocking or concurrent tasks.
+
+## Methods
+
+### async send_message(request: str, request_id: str, body: Any)
+
+Sends a structured JSON message over an available WebSocket connection from the pool.
+
+#### Parameters
+
+- **request** (str): Identifier for the type of request being handled.
+- **request_id** (str): Unique ID to correlate requests and responses.
+- **body** (Any): The actual content of the response message.
+
+#### Example Payload
+
+```json
+{
+  "status": "success",
+  "request": "example.request",
+  "request_id": "abc123",
+  "body": {
+    "key": "value"
+  }
+}
+```
+
+### async send_error(request: str, request_id: str, code: int, message: str, extra: dict[str, Any] | None = None)
+
+Sends a structured error message in response to a failed request.
+
+#### Parameters
+
+- **request** (str): Identifier for the original request.
+- **request_id** (str): The same ID as the one received in the request to maintain traceability.
+- **code** (int): Application-defined error code.
+- **message** (str): A human-readable description of the error.
+- **extra** (dict[str, Any] | None, optional): Additional contextual error information.
+
+#### Example Payload
+
+```json
+{
+  "status": "error",
+  "request": "example.request",
+  "request_id": "abc123",
+  "code": 400,
+  "message": "Invalid input data",
+  "extra": {
+    "field": "username"
+  }
+}
+```
+
+### Abstract Method: async call(data: Any, strategy: ConnectorSpec)
+
+Defines the contract for processing an incoming request based on the provided connector strategy. This method **must** be implemented by all subclasses of BaseDomain.
+
+#### Parameters
+
+- **data** (Any): Input data payload from the client.
+- **strategy** (ConnectorSpec): Specification object that defines how the connector should behave.
