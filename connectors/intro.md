@@ -7,30 +7,27 @@ title: Introduction to Connectors
 
 Welcome to the **Connectors** section of the Genie User Manual.
 
-This section provides documentation and guidance on how to integrate external systems and data sources with the Genie platform using standardized connector interfaces. These connectors allow seamless communication between Genie and external design tools, simulation engines, or data visualization platforms.
+This section provides documentation and guidance on how to integrate external systems and data sources with the Genie platform using standardized connector interfaces. These connectors allow seamless communication between Genie and external design tools or simulation engines.
 
 ## What You'll Find Here
 
-- Overview of supported connector types
-- Installation and setup instructions
-- Configuration guidelines
-- Example use cases and workflows
-- Troubleshooting tips
+- API Reference
+- Installation and setup instructions - TODO
+- Configuration guidelines - TODO
+- Example use cases and workflows - TODO
+- Troubleshooting tips - TODO
 
 ## Why Use Connectors?
 
-Connectors simplify the process of integrating third-party tools with Genie, allowing users to:
+Connectors offer a generic API that allow you to integrate any domain to access Genie's AI agent flow to solve any optimization problem:
 
 - Automate data exchange and reduce manual effort
 - Maintain consistency and synchronization across tools
 - Extend Genie’s functionality using familiar environments
 
-## Supported Connector Categories
+## Current connector implementations
 
-- Simulation Connectors
-- Data Import/Export Connectors
-- Visualization Connectors
-- API-based Integration Modules
+- Electrical engineering EDA tools (NgSpice, LTSpice, Cadence etc.)
 
 ## Getting Started
 
