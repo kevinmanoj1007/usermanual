@@ -40,7 +40,9 @@ def __init__(
 
 ## Public Methods
 
-### async send_message(request: str, request_id: str, body: Any)
+```python
+async def send_message(request: str, request_id: str, body: Any)
+```
 
 Sends a structured JSON message over an available WebSocket connection from the pool.
 
@@ -63,7 +65,9 @@ Sends a structured JSON message over an available WebSocket connection from the 
 }
 ```
 
-### async send_error(request: str, request_id: str, code: int, message: str, extra: dict[str, Any] | None = None)
+```python
+async def send_error(request: str, request_id: str, code: int, message: str, extra: dict[str, Any] | None = None)
+```
 
 Sends a structured error message in response to a failed request.
 

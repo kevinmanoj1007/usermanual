@@ -53,53 +53,77 @@ def __init__(
 
 ## Public Methods
 
-### parse_args()
+```python
+def parse_args()
+```
 
 Parses CLI arguments passed via sys.argv and dispatches the appropriate command/option logic. Validates commands and handles errors gracefully.
 
-### error(message: str)
+```python
+def error(message: str)
+```
 
 Prints a formatted error message with helpful guidance and exits the process.
 
-### print_help(command=None)
+```python
+def print_help(command=None)
+```
 
 Displays help text for a specific command (if given) or prints all registered help sections.
 
-### routine()
+```python
+def routine()
+```
 
 Executes the registered subroutines in sequence. This is typically invoked during startup to ensure registration, secret checks, or any additional routines run before the connector becomes active.
 
 ## Internal Methods
 
-### register(field, fields)
+```python
+def register(field, fields)
+```
 
 Registers the connector with the orchestrator if the REG field is not already marked True. Updates the persistent storage state on success.
 
-### check_secret(field, fields)
+```python
+def check_secret(field, fields)
+```
 
 Verifies whether the stored secret matches the current configuration. If changed or absent, triggers re-registration.
 
-### add_subroutine(name: str, field_default: Any, cb: Callable)
+```python
+def add_subroutine(name: str, field_default: Any, cb: Callable)
+```
 
 Registers a custom initialization subroutine to be run during routine() execution.
 
-### write_default()
+```python
+def write_default()
+```
 
 Initializes the persistent storage file with default field values, if it does not already exist.
 
-### read_storage()
+```python
+def read_storage()
+```
 
 Reads and returns the current persisted fields from disk, validating expected keys.
 
-### update_storage(field_name, value)
+```python
+def update_storage(field_name, value)
+```
 
 Updates a field in the persistent storage file.
 
-### file_exists(file)
+```python
+def file_exists(file)
+```
 
 Checks if a file exists on disk.
 
-### is_empty()
+```python
+def is_empty()
+```
 
 Checks whether the persistent storage file exists and is empty.
 

@@ -40,30 +40,42 @@ No parameters required for initialization.
 
 ## Public Methods
 
-### route(endpoint: str, method: Literal["GET", "SET", "DELETE"]) -> Callable
+```python
+def route(endpoint: str, method: Literal["GET", "SET", "DELETE"]) -> Callable
+```
 
 Decorator to register a function to a specific endpoint and method.
 
 - Overwrites existing handler if the same endpoint is registered again.
 - Logs a warning on overwrite.
 
-### get(endpoint: str) -> Callable
+```python
+def get(endpoint: str) -> Callable
+```
 
 Shortcut for `route(..., method="GET")`.
 
-### set(endpoint: str) -> Callable
+```python
+def set(endpoint: str) -> Callable
+```
 
 Shortcut for `route(..., method="SET")`.
 
-### delete(endpoint: str) -> Callable
+```python
+def delete(endpoint: str) -> Callable
+```
 
 Shortcut for `route(..., method="DELETE")`.
 
-### add_middleware(middleware: MiddlewareCallable) -> None
+```python
+def add_middleware(middleware: MiddlewareCallable) -> None
+```
 
 Appends a middleware function to the middleware stack. Middleware must conform to the `(Request, call_next) -> Awaitable[Any]` signature.
 
-### async call(...) -> Any
+```python
+def async call(...) -> Any
+```
 
 Main execution entry point for the router.
 
@@ -83,11 +95,15 @@ Main execution entry point for the router.
 
 ## Internal Methods
 
-### build_middleware_stack() -> None
+```python
+def build_middleware_stack() -> None
+```
 
 Wraps the internal handler in a composed middleware stack using the registered middleware functions. Each middleware wraps the next in a LIFO order.
 
-### async _handle(request: Request) -> Any
+```python
+def async _handle(request: Request) -> Any
+```
 
 Core request processing method:
 
