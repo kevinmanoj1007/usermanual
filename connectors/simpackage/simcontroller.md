@@ -1,12 +1,10 @@
 # Router Handlers
 
-The Router Handlers module defines routing logic for the simulator service. It connects API requests to appropriate handler functions that interact with a SimInterface strategy. Each route parses structured input using Pydantic models, delegates logic to the simulator backend, and returns standardized outputs such as simulation results, extracted data, and modified netlists.
+The Controller module defines routing logic for the simulator service. It connects API requests to appropriate handler functions that interact with a SimInterface strategy. Each route parses structured input using Pydantic models, delegates logic to the simulator backend, and returns standardized outputs such as simulation results, extracted data, and modified netlists.
 
 ## Module Definition
 
-```python
-# sim/router_handlers.py
-```
+**Defined in:** `sim/controller.py`
 
 **Purpose:** Modular and extensible routing system suitable for simulators that follow different internal implementations.
 
@@ -20,9 +18,8 @@ All handlers receive validated input data, structured using Pydantic models (e.g
 
 ## Handler Functions
 
-### upload(data: Upload, strategy: SimInterface)
-
 ```python
+@router.set("upload")
 def upload(data: Upload, strategy: SimInterface) -> dict
 ```
 
@@ -37,9 +34,8 @@ Processes schematic upload and dependency management.
 - Calls SimInterface.upload() to extract netlist, parameters, components, and nets
 - Returns a dictionary with the netlist, extracted data, and circuit graph
 
-### modify_netlist(data: ModifyNetlist, strategy: SimInterface)
-
 ```python
+@router.set("modify_netlist")
 def modify_netlist(data: ModifyNetlist, strategy: SimInterface) -> dict
 ```
 
@@ -54,9 +50,8 @@ Replaces existing netlist with provided netlist data.
 - Calls SimInterface.modify_netlist() and re-extracts metadata
 - Returns the new netlist and associated metadata
 
-### extract_parameters(data: Empty, strategy: SimInterface)
-
 ```python
+@router.get("extract_parameters")
 def extract_parameters(data: Empty, strategy: SimInterface) -> dict
 ```
 
@@ -68,9 +63,8 @@ Extracts parameters from the current circuit netlist.
 
 **Returns:** Dictionary with a list of parameters
 
-### extract_portables(data: Empty, strategy: SimInterface)
-
 ```python
+@router.get("extract_portables")
 def extract_portables(data: Empty, strategy: SimInterface) -> dict
 ```
 
@@ -82,9 +76,8 @@ Extracts all portable elements including component types and models.
 
 **Returns:** Dictionary with component metadata
 
-### simulate(data: Simulate, strategy: SimInterface)
-
 ```python
+@router.get("simulate")
 def simulate(data: Simulate, strategy: SimInterface) -> dict
 ```
 
@@ -98,9 +91,8 @@ Executes circuit simulation with provided parameters.
 - Constructs a SimulationContext and runs a simulation
 - Returns the simulation result as provided by the backend
 
-### optimize(data: Simulate, strategy: SimInterface)
-
 ```python
+@router.get("optimize")
 def optimize(data: Simulate, strategy: SimInterface) -> dict
 ```
 
@@ -114,9 +106,8 @@ Executes circuit optimization with provided parameters.
 - Similar to simulate, but enables optimization mode
 - Returns optimization results
 
-### extract_nets(data: Empty, strategy: SimInterface)
-
 ```python
+@router.get("extract_nets")
 def extract_nets(data: Empty, strategy: SimInterface) -> dict
 ```
 
@@ -128,9 +119,8 @@ Extracts electrical network information from current circuit.
 
 **Returns:** List of all electrical nets in the current circuit
 
-### port(data: Port, strategy: SimInterface)
-
 ```python
+@router.get("port")
 def port(data: Port, strategy: SimInterface) -> dict
 ```
 
@@ -144,9 +134,8 @@ Ports netlist to new component mapping based on specified model.
 
 ## Dependency Management
 
-### get_deps(data: GetCircuitDeps, strategy: SimInterface)
-
 ```python
+@router.get("deps")
 def get_deps(data: GetCircuitDeps, strategy: SimInterface) -> dict
 ```
 
@@ -158,9 +147,8 @@ Lists all dependency files related to the given circuit.
 
 **Returns:** Nested dictionary representing the file structure
 
-### add_dep(data: UploadCircuitDep, strategy: SimInterface)
-
 ```python
+@router.set("deps")
 def add_dep(data: UploadCircuitDep, strategy: SimInterface) -> dict
 ```
 
@@ -174,9 +162,8 @@ Uploads and registers a new circuit dependency file.
 - Uploads a base64-encoded file and adds it as a dependency
 - Returns the updated dependency file structure
 
-### delete_dep(data: DeleteCircuitDep)
-
 ```python
+@router.delete("deps")
 def delete_dep(data: DeleteCircuitDep) -> None
 ```
 
@@ -189,9 +176,8 @@ Removes specified circuit dependency file.
 
 ## Graph Operations
 
-### extract_graph(data: Empty, strategy: SimInterface)
-
 ```python
+@router.get("extract_graph")
 def extract_graph(data: Empty, strategy: SimInterface) -> dict
 ```
 
