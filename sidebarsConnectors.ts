@@ -15,7 +15,7 @@ const sidebarsConnectors: SidebarsConfig = {
         'cdk/baseconnector',
         'cdk/basedomain',
         'cdk/basestartup',
-        'cdk/config',
+        'cdk/cdksettings',
         'cdk/register',
         'cdk/router',
         'cdk/middleware',

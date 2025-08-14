@@ -46,7 +46,9 @@ Initializes the configuration from the specified environment file using the shar
 
 ## Public Methods
 
-### base_url() -> str
+```python
+def base_url() -> str
+```
 
 Returns the full base URL used to establish a WebSocket connection with the orchestrator.
 
@@ -79,7 +81,9 @@ else:
 - If `TEST_ENV` is set in the environment, `.test.env` is used.
 - Otherwise, the default `.env` file is loaded.
 
-### update_settings(s: CDKSettings) -> None
+```python
+def update_settings(s: CDKSettings) -> None
+```
 
 Updates the global `cdk_settings` instance with a new configuration.
 
