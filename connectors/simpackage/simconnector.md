@@ -44,37 +44,53 @@ def __init__(self, strategy: SimInterface, *, throw_errors=False) -> None:
 
 ## Public Methods
 
-### on_start()
+```python
+def on_start()
+```
 
 Runs during connector startup. Checks for active runtime options and performs early-stage operations, such as executing test modes.
 
-### check_options()
+```python
+def check_options()
+```
 
 Checks runtime options and handles special behaviors. If the "test" option is provided with sub-options (e.g., ["netlist", "simulate"]), it initializes the Testing module, runs the tests, and exits the process.
 
-### register_simulator_callback(id: SimulatorCallbacks, cb: Callable)
+```python
+def register_simulator_callback(id: SimulatorCallbacks, cb: Callable)
+```
 
 Registers a simulator-level callback to be invoked during simulation events. The callback is associated with a unique identifier (SimulatorCallbacks).
 
-### trigger_process()
+```python
+def register_simulator_callback(id: SimulatorCallbacks, cb: Callable)
+```
 
 Initiates processing of a new simulation task if the system is not currently at maximum processing capacity and if the task queue is not empty.
 
-### async receiver()
+```python
+def async receiver()
+```
 
 Asynchronous method that continuously listens for incoming WebSocket messages. On receiving a valid request and request_id, it appends the data to the task queue and triggers processing.
 
 ## Internal Methods
 
-### _call_cb(id: SimulatorCallbacks, *args, **kwargs)
+```python
+def _call_cb(id: SimulatorCallbacks, *args, **kwargs)
+```
 
 Invokes a previously registered callback function, if available, for a specific simulator event.
 
-### _proccess_request()
+```python
+def _proccess_request()
+```
 
 Dequeues a simulation request and submits it as an asynchronous task. Each task is bound to a done callback that handles post-processing and error reporting.
 
-### task_handler(task: Task, send_error: Callable[[int, str], Coroutine])
+```python
+def task_handler(task: Task, send_error: Callable[[int, str], Coroutine])
+```
 
 Handles the outcome of an asynchronous simulation task. If the task raises an exception, it logs the error and sends a structured error message through the WebSocket. It also updates internal task counters and triggers the next task in the queue.
 
