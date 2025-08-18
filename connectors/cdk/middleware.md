@@ -1,6 +1,6 @@
 # Middleware
 
-This module defines abstract Middleware class used to wrap request handlers, including logic to load environment-specific settings and construct the base URL for communication with the Orchestrator.
+This module defines abstract [Middleware](middleware) class used to wrap request handlers, including logic to load environment-specific settings and construct the base URL for communication with the Orchestrator.
 
 ## Class Definition: Middleware
 
@@ -28,7 +28,7 @@ def __init__(self, app: Callable, dispatch: Optional[Callable] = None):
 
 - Application handler registration
 - Dispatch method configuration
-- Middleware chain setup
+- [Middleware](middleware) chain setup
 
 ## Attributes: Middleware
 
@@ -47,7 +47,7 @@ Entry point for middleware execution. Calls `dispatch_fn` with the current reque
 
 ## Required Subclass Implementation: Middleware
 
-Any subclass of Middleware must implement:
+Any subclass of [Middleware](middleware) must implement:
 
 ```python
 @abstractmethod

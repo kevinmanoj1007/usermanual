@@ -1,6 +1,6 @@
 # Router
 
-The Router class manages endpoint registration and request dispatching for CDK-based connectors. It supports route-based handling for methods (GET, SET, DELETE), typed argument validation via introspection, and middleware chaining.
+The [Router](router) class manages endpoint registration and request dispatching for CDK-based connectors. It supports route-based handling for methods (GET, SET, DELETE), typed argument validation via introspection, and middleware chaining.
 
 ## Class Definition
 
@@ -25,8 +25,8 @@ No parameters required for initialization.
 ### Initializes
 
 - Handler dictionary for method-endpoint mapping
-- Middleware list and stack management
-- Strategy instance registration
+- [Middleware](middleware) list and stack management
+- Strategy instance [registration](register)
 - Request processing infrastructure
 
 ## Attributes
@@ -35,7 +35,7 @@ No parameters required for initialization.
 |-----------|------|-------------|
 | `handlers` | dict | A nested dictionary that maps request methods (GET, SET, DELETE) to their respective endpoint handlers |
 | `strategy` | ConnectorSpec | Instance of the active ConnectorSpec, passed automatically to handler functions |
-| `middleware` | list | A list of middleware callables added to the router |
+| `middleware` | list | A list of middleware callables added to the [router](router) |
 | `middleware_stack` | Callable | The composed middleware execution stack (built lazily on first request) |
 
 ## Public Methods
@@ -71,13 +71,13 @@ Shortcut for `route(..., method="DELETE")`.
 def add_middleware(middleware: MiddlewareCallable) -> None
 ```
 
-Appends a middleware function to the middleware stack. Middleware must conform to the `(Request, call_next) -> Awaitable[Any]` signature.
+Appends a middleware function to the middleware stack. [Middleware](middleware) must conform to the `(Request, call_next) -> Awaitable[Any]` signature.
 
 ```python
 def async call(...) -> Any
 ```
 
-Main execution entry point for the router.
+Main execution entry point for the [router](router).
 
 #### Parameters
 

@@ -1,6 +1,6 @@
 # BaseStartup
 
-This module provides a CLI-based startup routine for connector initialization, configuration management, and orchestrator registration.
+This module provides a CLI-based startup routine for connector initialization, configuration management, and orchestrator [registration](register).
 
 ## Class Definition
 
@@ -8,7 +8,7 @@ This module provides a CLI-based startup routine for connector initialization, c
 class BaseStartup:
 ```
 
-A class that defines the bootstrapping logic for connector applications. It manages commands, environment validation, file-based state persistence, and connector registration with the orchestrator.
+A class that defines the bootstrapping logic for connector applications. It manages commands, environment validation, file-based state persistence, and connector [registration](register) with the orchestrator.
 
 ## Constructor
 
@@ -25,30 +25,30 @@ def __init__(
 
 ### Parameters
 
-- **register_data** (dict): Data payload to be used during registration.
+- **register_data** (dict): Data payload to be used during [registration](register).
 - **helper_text** (dict[str, str]): A dictionary of help messages for CLI usage.
 - **commands** (dict[str, Callable]): Mapping of command names to their execution logic.
 - **connector_kind** (ConnectorKind): Enum indicating the type of connector.
 - **connector_options** (dict[str, Option]): Dictionary of available CLI options for the connector.
-- **post_register** (Callable | None, optional): Optional function to run after successful registration.
+- **post_register** (Callable | None, optional): Optional function to run after successful [registration](register).
 
 ### Initializes
 
 - CLI command mapping and validation
 - Help text system for user guidance
 - Connector type and options configuration
-- Registration callback handling
+- [Registration](register) callback handling
 
 ## Attributes
 
 | Attribute | Type | Description |
 |-----------|------|-------------|
-| `register_data` | dict | Data payload used during orchestrator registration |
+| `register_data` | dict | Data payload used during orchestrator [registration](register) |
 | `helper_text` | dict[str, str] | Help messages for CLI commands |
 | `commands` | dict[str, Callable] | Command name to execution logic mapping |
 | `connector_kind` | ConnectorKind | Type classification of the connector |
 | `connector_options` | dict[str, Option] | Available CLI configuration options |
-| `post_register` | Callable \| None | Optional callback after successful registration |
+| `post_register` | Callable \| None | Optional callback after successful [registration](register) |
 | `storage_location` | Path | Full path to JSON persistence file |
 
 ## Public Methods
@@ -75,7 +75,7 @@ Displays help text for a specific command (if given) or prints all registered he
 def routine()
 ```
 
-Executes the registered subroutines in sequence. This is typically invoked during startup to ensure registration, secret checks, or any additional routines run before the connector becomes active.
+Executes the registered subroutines in sequence. This is typically invoked during startup to ensure [registration](register), secret checks, or any additional routines run before the connector becomes active.
 
 ## Internal Methods
 
@@ -89,7 +89,7 @@ Registers the connector with the orchestrator if the REG field is not already ma
 def check_secret(field, fields)
 ```
 
-Verifies whether the stored secret matches the current configuration. If changed or absent, triggers re-registration.
+Verifies whether the stored secret matches the current configuration. If changed or absent, triggers re-[registration](register).
 
 ```python
 def add_subroutine(name: str, field_default: Any, cb: Callable)
@@ -135,7 +135,7 @@ Persistent state is stored in a JSON file at:
 cdk_settings.data_dir/connector_storage
 ```
 
-The storage system manages connector registration state, secrets, and custom field persistence across application restarts.
+The storage system manages connector [registration](register) state, secrets, and custom field persistence across application restarts.
 
 ## Example Usage
 
@@ -147,6 +147,6 @@ If called without arguments, the class performs only the state-checking routine 
 
 ## Dependencies
 
-- cdk.config.cdk_settings
+- [cdk.config.cdk_settings](cdksettings)
 - cdk.constants.ConnectorKind
 - cdk.constants.Option

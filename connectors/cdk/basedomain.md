@@ -1,6 +1,6 @@
 # BaseDomain
 
-The BaseDomain class provides a foundational interface and shared utilities for all connector domain implementations. It is responsible for managing WebSocket communication with clients and handling message dispatching, including both success and error responses.
+The [BaseDomain](basedomain) class provides a foundational interface and shared utilities for all connector domain implementations. It is responsible for managing WebSocket communication with clients and handling message dispatching, including both success and error responses.
 
 ## Class Definition
 
@@ -96,7 +96,7 @@ Sends a structured error message in response to a failed request.
 
 ## Required Subclass Implementation
 
-Any subclass of BaseDomain must implement:
+Any subclass of [BaseDomain](basedomain) must implement:
 
 ```python
 @abstractmethod

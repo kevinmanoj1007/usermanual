@@ -1,6 +1,6 @@
 # BaseConnector
 
-The BaseConnector class is an abstract base class for building WebSocket-based connectors. It defines the lifecycle, connection handling, callback management, task orchestration, and communication protocols between the client and the backend system.
+The [BaseConnector](baseconnector) class is an abstract base class for building WebSocket-based connectors. It defines the lifecycle, connection handling, callback management, task orchestration, and communication protocols between the client and the backend system.
 
 ## Class Definition
 
@@ -31,7 +31,7 @@ def __init__(
 - **secret** (str): Client-specific secret key for authentication.
 - **options** (dict): Runtime configuration options.
 - **throw_errors** (bool): If True, exceptions will be re-raised. Defaults to False.
-- **startup** (BaseStartup): Component defining startup logic to be executed before connection.
+- **startup** ([BaseStartup](basestartup)): Component defining startup logic to be executed before connection.
 - **hb_timeout** (int): Heartbeat interval in seconds. Defaults to 20.
 - **connection** (AsyncInterface): Asynchronous WebSocket client interface.
 
@@ -49,7 +49,7 @@ def __init__(
 | `_logger` | Logger | Logging utility |
 | `_ws` | AsyncInterface | WebSocket connection handler |
 | `_secret` | str | Client key for authorization |
-| `startup` | BaseStartup | Startup routine handler |
+| `startup` | [BaseStartup](basestartup) | Startup routine handler |
 | `_options` | dict | Runtime feature flags |
 | `_hb_timeout` | int | Heartbeat interval |
 | `_throw_errors` | bool | Flag for error propagation |
@@ -168,7 +168,7 @@ Sends a structured error message over the WebSocket.
 
 ## Required Subclass Implementation
 
-Any subclass of BaseConnector must implement:
+Any subclass of [BaseConnector](baseconnector) must implement:
 
 ```python
 async def receiver(self):
@@ -189,9 +189,9 @@ Callbacks can be registered and invoked at key lifecycle stages using the Callba
 
 ## Dependencies
 
-- cdk.base_domain.BaseDomain
+- cdk.base_domain.[BaseDomain](basedomain)
 - cdk.connection_pool.WebsocketPool
-- cdk.services.startup.BaseStartup
+- cdk.services.startup.[BaseStartup](basestartup)
 - cdk.constants.Callbacks
 - core.websocket.asyncio.interface.AsyncInterface
 - cdk.config.cdk_settings

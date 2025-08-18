@@ -1,6 +1,6 @@
 # CDKSettings
 
-The CDKSettings class defines and loads configuration settings required to initialize and run a connector instance in the CDK (Connector Development Kit) environment. It provides both runtime environment selection (.env or .test.env) and a dynamic way to build the orchestrator's base URL.
+The [CDKSettings](cdksettings) class defines and loads configuration settings required to initialize and run a connector instance in the CDK (Connector Development Kit) environment. It provides both runtime environment selection (.env or .test.env) and a dynamic way to build the orchestrator's base URL.
 
 ## Class Definition
 
@@ -11,7 +11,7 @@ class CDKSettings(BaseSettings):
 **Inherits from:** BaseSettings  
 **Defined in:** core.config
 
-The CDKSettings class holds all essential configuration variables for a connector, such as orchestrator address, security credentials, heartbeat settings, and runtime flags.
+The [CDKSettings](cdksettings) class holds all essential configuration variables for a connector, such as orchestrator address, security credentials, heartbeat settings, and runtime flags.
 
 ## Constructor
 
@@ -67,7 +67,7 @@ Returns the full base URL used to establish a WebSocket connection with the orch
 
 ### cdk_settings
 
-A singleton instance of CDKSettings, initialized automatically at import time.
+A singleton instance of [CDKSettings](cdksettings), initialized automatically at import time.
 
 ### Initialization Logic
 
@@ -89,7 +89,7 @@ Updates the global `cdk_settings` instance with a new configuration.
 
 #### Parameters
 
-- **s** (CDKSettings): An instance of CDKSettings that will replace the global one.
+- **s** ([CDKSettings](cdksettings)): An instance of [CDKSettings](cdksettings) that will replace the global one.
 
 ## Dependencies
 
