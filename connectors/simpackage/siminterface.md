@@ -18,7 +18,7 @@ The SimInterface class inherits its constructor from ConnectorSpec and does not 
 
 The following methods **must** be implemented by all subclasses of SimInterface:
 
-### create_netlist(metadata: Metadata) -> bytes
+
 
 ```python
 @abstractmethod
@@ -32,7 +32,7 @@ Generate a raw netlist representation from the given metadata.
 
 **Returns:** Raw netlist as bytes
 
-### modify_netlist(netlist: str, metadata: Metadata) -> bytes
+
 
 ```python
 @abstractmethod
@@ -47,7 +47,7 @@ Apply modifications to an existing netlist based on updated metadata.
 
 **Returns:** Modified netlist as bytes
 
-### get_parameters(metadata: Metadata) -> dict
+
 
 ```python
 @abstractmethod
@@ -61,7 +61,7 @@ Extract simulation-relevant parameters from the circuit metadata.
 
 **Returns:** Dictionary of simulation parameters
 
-### run_simulation(simulation_ctx: SimulationContext, metadata: Metadata) -> dict
+
 
 ```python
 @abstractmethod
@@ -76,7 +76,7 @@ Run a simulation using the provided context and return results.
 
 **Returns:** Dictionary containing simulation results
 
-### get_nets(metadata: Metadata) -> dict
+
 
 ```python
 @abstractmethod
@@ -90,7 +90,7 @@ Extract all signal nets (connections) from the circuit graph.
 
 **Returns:** Dictionary of circuit nets and connections
 
-### port(mapping: str, models: list[str], metadata: Metadata) -> bytes
+
 
 ```python
 @abstractmethod
@@ -106,7 +106,7 @@ Produce a portable (e.g., SPICE-compatible) representation using a model mapping
 
 **Returns:** Portable netlist representation as bytes
 
-### get_components(metadata: Metadata) -> list[str]
+
 
 ```python
 @abstractmethod
@@ -120,7 +120,7 @@ List all components present in the circuit.
 
 **Returns:** List of component identifiers
 
-### get_models(metadata: Metadata) -> list[str]
+
 
 ```python
 @abstractmethod
@@ -134,7 +134,7 @@ Return a list of supported or available simulation models.
 
 **Returns:** List of available simulation models
 
-### get_component_types(metadata: Metadata) -> list[str]
+
 
 ```python
 @abstractmethod
@@ -148,7 +148,7 @@ Classify components into types (e.g., resistors, capacitors).
 
 **Returns:** List of component type classifications
 
-### get_graph(metadata: Metadata) -> dict
+
 
 ```python
 @abstractmethod
@@ -164,7 +164,7 @@ Return the circuit graph (e.g., nodes, connections) in a structured format.
 
 ## Concrete Methods
 
-### get_portables(metadata: Metadata) -> tuple[list[str], list[str], list[str]]
+
 
 ```python
 def get_portables(self, metadata: Metadata) -> tuple[list[str], list[str], list[str]]
@@ -177,7 +177,7 @@ Helper method to retrieve components, component types, and models in one call.
 
 **Returns:** Tuple containing (components, component_types, models)
 
-### available_deps(path: Path) -> dict[str, Any]
+
 
 ```python
 def available_deps(self, path: Path) -> dict[str, Any]
@@ -200,7 +200,7 @@ Recursively scans the given path and builds a dictionary representing the file/f
 }
 ```
 
-### upload(metadata: Metadata) -> dict
+
 
 ```python
 def upload(self, metadata: Metadata) -> dict
@@ -220,7 +220,7 @@ Prepares a dictionary payload of all simulation metadata required for registrati
 
 **Returns:** Complete metadata dictionary for upload
 
-### add_dep(project: str, kind: CircuitDepTypes, name: str, contents: str) -> Path
+
 
 ```python
 def add_dep(self, project: str, kind: CircuitDepTypes, name: str, contents: str) -> Path
@@ -236,7 +236,7 @@ Adds a dependency (e.g., model or library file) to the connector's data director
 
 **Returns:** Path where the file was saved
 
-### call(request: str, *args, **kwargs) -> Any
+
 
 ```python
 def call(self, request: str, *args, **kwargs) -> Any
