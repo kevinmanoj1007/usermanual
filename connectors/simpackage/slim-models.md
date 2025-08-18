@@ -1,6 +1,6 @@
 # Connector Models
 
-The Connector Models module defines Pydantic models used for managing connector-related functionality such as uploads, netlist modifications, dependency management, simulation setup, and data capture. These models enforce structure and validation for data exchanged between the frontend, backend, and simulation engine.
+The [Connector Models](slim-models) module defines Pydantic models used for managing connector-related functionality such as uploads, netlist modifications, dependency management, simulation setup, and data capture. These models enforce structure and validation for data exchanged between the frontend, backend, and simulation engine.
 
 ## Module Definition
 

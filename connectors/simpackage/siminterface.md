@@ -1,6 +1,6 @@
 # SimInterface
 
-The SimInterface class is an abstract base class that defines the interface contract for a simulator connector in the system. It extends ConnectorSpec and enforces implementation of core simulation capabilities such as netlist creation, parameter extraction, simulation execution, and component/model handling.
+The [SimInterface](siminterface) class is an abstract base class that defines the interface contract for a simulator connector in the system. It extends ConnectorSpec and enforces implementation of core simulation capabilities such as netlist creation, parameter extraction, simulation execution, and component/model handling.
 
 ## Class Definition
 
@@ -12,11 +12,11 @@ class SimInterface(ConnectorSpec, ABC):
 
 ## Constructor
 
-The SimInterface class inherits its constructor from ConnectorSpec and does not define additional initialization parameters.
+The [SimInterface](siminterface) class inherits its constructor from ConnectorSpec and does not define additional initialization parameters.
 
 ## Abstract Methods
 
-The following methods **must** be implemented by all subclasses of SimInterface:
+The following methods **must** be implemented by all subclasses of [SimInterface](siminterface):
 
 
 
@@ -262,7 +262,7 @@ Dispatch method for dynamic method invocation by name.
 
 ## Required Subclass Implementation
 
-Any subclass of SimInterface must implement all abstract methods:
+Any subclass of [SimInterface](siminterface) must implement all abstract methods:
 
 ```python
 class MySpiceSimulator(SimInterface):

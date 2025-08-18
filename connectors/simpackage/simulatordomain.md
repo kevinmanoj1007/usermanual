@@ -1,6 +1,6 @@
 # Simulator
 
-The Simulator class is a domain-specific handler responsible for routing simulation requests, managing synchronization of required data, handling errors gracefully, and capturing performance metrics. It integrates with a WebSocket pool and thread pool to manage concurrent simulation sessions.
+The [Simulator](simulatordomain) class is a domain-specific handler responsible for routing simulation requests, managing synchronization of required data, handling errors gracefully, and capturing performance metrics. It integrates with a WebSocket pool and thread pool to manage concurrent simulation sessions.
 
 ## Class Definition
 
@@ -58,7 +58,7 @@ Handles a single simulation request by routing to appropriate endpoints.
 
 **Parameters:**
 - **data** (dict): Request payload including method, request, request_id, and body
-- **strategy** (SimInterface): Strategy implementation to be used for processing
+- **strategy** ([SimInterface](siminterface)): Strategy implementation to be used for processing
 
 **Process:**
 - Routes the request to the appropriate endpoint using the router
@@ -131,7 +131,7 @@ router.add_middleware(self.capture_metrics)
 ```
 
 **Execution Order:**
-These middlewares are executed for every request routed through the Simulator in the order registered.
+These middlewares are executed for every request routed through the [Simulator](simulatordomain) in the order registered.
 
 ## Performance Monitoring
 

@@ -1,6 +1,6 @@
 # Router Handlers
 
-The Controller module defines routing logic for the simulator service. It connects API requests to appropriate handler functions that interact with a SimInterface strategy. Each route parses structured input using Pydantic models, delegates logic to the simulator backend, and returns standardized outputs such as simulation results, extracted data, and modified netlists.
+The Controller module defines routing logic for the simulator service. It connects API requests to appropriate handler functions that interact with a [SimInterface](siminterface) strategy. Each route parses structured input using Pydantic models, delegates logic to the simulator backend, and returns standardized outputs such as simulation results, extracted data, and modified netlists.
 
 ## Module Definition
 
@@ -11,7 +11,7 @@ The Controller module defines routing logic for the simulator service. It connec
 ## Key Concepts
 
 ### Strategy Pattern
-All handlers rely on a `strategy` parameter, which is an instance of a class implementing the SimInterface. This abstracts backend simulator logic, allowing handlers to remain generic.
+All handlers rely on a `strategy` parameter, which is an instance of a class implementing the [SimInterface](siminterface). This abstracts backend simulator logic, allowing handlers to remain generic.
 
 ### Data Validation
 All handlers receive validated input data, structured using Pydantic models (e.g., Upload, Simulate, ModifyNetlist).
@@ -27,11 +27,11 @@ Processes schematic upload and dependency management.
 
 **Parameters:**
 - **data** (Upload): Validated upload data containing schematic and dependencies
-- **strategy** (SimInterface): Backend simulation strategy implementation
+- **strategy** ([SimInterface](siminterface)): Backend simulation strategy implementation
 
 **Process:**
 - Saves the schematic and dependencies to the project
-- Calls SimInterface.upload() to extract netlist, parameters, components, and nets
+- Calls [SimInterface](siminterface).upload() to extract netlist, parameters, components, and nets
 - Returns a dictionary with the netlist, extracted data, and circuit graph
 
 ```python
@@ -43,11 +43,11 @@ Replaces existing netlist with provided netlist data.
 
 **Parameters:**
 - **data** (ModifyNetlist): Validated netlist modification data
-- **strategy** (SimInterface): Backend simulation strategy implementation
+- **strategy** ([SimInterface](siminterface)): Backend simulation strategy implementation
 
 **Process:**
 - Replaces the existing netlist with the provided one
-- Calls SimInterface.modify_netlist() and re-extracts metadata
+- Calls [SimInterface](siminterface).modify_netlist() and re-extracts metadata
 - Returns the new netlist and associated metadata
 
 ```python
@@ -59,7 +59,7 @@ Extracts parameters from the current circuit netlist.
 
 **Parameters:**
 - **data** (Empty): Empty data payload
-- **strategy** (SimInterface): Backend simulation strategy implementation
+- **strategy** ([SimInterface](siminterface)): Backend simulation strategy implementation
 
 **Returns:** Dictionary with a list of parameters
 
@@ -72,7 +72,7 @@ Extracts all portable elements including component types and models.
 
 **Parameters:**
 - **data** (Empty): Empty data payload
-- **strategy** (SimInterface): Backend simulation strategy implementation
+- **strategy** ([SimInterface](siminterface)): Backend simulation strategy implementation
 
 **Returns:** Dictionary with component metadata
 
@@ -85,7 +85,7 @@ Executes circuit simulation with provided parameters.
 
 **Parameters:**
 - **data** (Simulate): Validated simulation configuration
-- **strategy** (SimInterface): Backend simulation strategy implementation
+- **strategy** ([SimInterface](siminterface)): Backend simulation strategy implementation
 
 **Process:**
 - Constructs a SimulationContext and runs a simulation
@@ -100,7 +100,7 @@ Executes circuit optimization with provided parameters.
 
 **Parameters:**
 - **data** (Simulate): Validated simulation configuration
-- **strategy** (SimInterface): Backend simulation strategy implementation
+- **strategy** ([SimInterface](siminterface)): Backend simulation strategy implementation
 
 **Process:**
 - Similar to simulate, but enables optimization mode
@@ -115,7 +115,7 @@ Extracts electrical network information from current circuit.
 
 **Parameters:**
 - **data** (Empty): Empty data payload
-- **strategy** (SimInterface): Backend simulation strategy implementation
+- **strategy** ([SimInterface](siminterface)): Backend simulation strategy implementation
 
 **Returns:** List of all electrical nets in the current circuit
 
@@ -128,7 +128,7 @@ Ports netlist to new component mapping based on specified model.
 
 **Parameters:**
 - **data** (Port): Validated port configuration data
-- **strategy** (SimInterface): Backend simulation strategy implementation
+- **strategy** ([SimInterface](siminterface)): Backend simulation strategy implementation
 
 **Returns:** Updated netlist and extracted metadata
 
@@ -143,7 +143,7 @@ Lists all dependency files related to the given circuit.
 
 **Parameters:**
 - **data** (GetCircuitDeps): Circuit dependency query data
-- **strategy** (SimInterface): Backend simulation strategy implementation
+- **strategy** ([SimInterface](siminterface)): Backend simulation strategy implementation
 
 **Returns:** Nested dictionary representing the file structure
 
@@ -156,7 +156,7 @@ Uploads and registers a new circuit dependency file.
 
 **Parameters:**
 - **data** (UploadCircuitDep): Base64-encoded file upload data
-- **strategy** (SimInterface): Backend simulation strategy implementation
+- **strategy** ([SimInterface](siminterface)): Backend simulation strategy implementation
 
 **Process:**
 - Uploads a base64-encoded file and adds it as a dependency
@@ -185,14 +185,14 @@ Extracts graph representation of the current netlist.
 
 **Parameters:**
 - **data** (Empty): Empty data payload
-- **strategy** (SimInterface): Backend simulation strategy implementation
+- **strategy** ([SimInterface](siminterface)): Backend simulation strategy implementation
 
 **Returns:** Graph nodes and edges for visualization or analysis
 
 ## Design Principles
 
 ### Abstraction
-The abstraction via SimInterface allows this module to support multiple backend simulators with minimal changes.
+The abstraction via [SimInterface](siminterface) allows this module to support multiple backend simulators with minimal changes.
 
 ### Reliability
 All functions are structured to accept validated inputs and return consistent outputs, improving reliability.
@@ -203,5 +203,5 @@ The handlers focus solely on routing and delegating logic, adhering to separatio
 ## Dependencies
 
 - Pydantic models (Upload, Simulate, ModifyNetlist, Empty, Port, GetCircuitDeps, UploadCircuitDep, DeleteCircuitDep)
-- SimInterface strategy pattern implementation
+- [SimInterface](siminterface) strategy pattern implementation
 - SimulationContext for simulation execution
