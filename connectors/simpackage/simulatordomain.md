@@ -48,8 +48,6 @@ def __init__(
 
 ## Public Methods
 
-### async call(data: Any, strategy: SimInterface)
-
 ```python
 async def call(self, data: Any, strategy: SimInterface) -> None
 ```
@@ -66,8 +64,6 @@ Handles a single simulation request by routing to appropriate endpoints.
 - Uses default success/error response templates defined in Defaults
 
 ## Middleware Methods
-
-### async synchronize(request: Request, call_next)
 
 ```python
 async def synchronize(self, request: Request, call_next) -> Any
@@ -89,8 +85,6 @@ Middleware for synchronizing circuit dependencies before simulation.
 **Synchronizes if:**
 - The local artifact folder is empty AND
 - The request endpoint is not upload, netlist, or deps
-
-### async capture_metrics(request: Request, call_next)
 
 ```python
 async def capture_metrics(self, request: Request, call_next) -> Any
