@@ -69,7 +69,3 @@ Each connector must implement:
 - Domain-specific request handlers
 - Data models for request/response validation
 - Registration with the Genie orchestrator
-
----
-
-Need help? Visit the [Support page](#) or contact the development team for technical assistance with connector development or integration.
