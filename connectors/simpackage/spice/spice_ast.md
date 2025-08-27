@@ -1,97 +1,161 @@
-# spice_ast.py
+# Spice AST
 
-## Overview
-
-This module defines the Abstract Syntax Tree (AST) classes for representing parsed SPICE netlist components and structures. All AST classes inherit from Pydantic's `BaseModel` for data validation and serialization.
+The `spice_ast` module defines the Abstract Syntax Tree (AST) structures for SPICE netlists. Each element of a SPICE circuit (components, sources, subcircuits, etc.) is represented as a class with relevant attributes.
 
 ## Base Classes
 
-### Ast
-Base class for all AST nodes.
+### `Ast`
+- **Base class** for all AST elements.
 
-### Component
-Abstract base class for all SPICE components. Contains:
-- `name`: Component instance name
-- `connections`: List of node connections
-- `features`: List of component parameters/features
-- Abstract `parse()` method for component-specific parsing
-- Methods for parameter reference checking and feature extraction
+### `Component (Ast)`
+- **Attributes:**
+  - `name: str` — Identifier of the component.
+  - `connections: list[str]` — Net connections for the component.
+  - `features: list[Feature]` — Additional features or parameters.
 
-### SourceStimulus
-Utility class for parsing source component stimulus values (DC, AC, transient, distortion).
+### `Expression (Ast)`
+- **Attributes:**
+  - `references: set[str]` — Referenced identifiers.
+  - `span: Span` — Source code span.
 
-## Core AST Types
+### `Feature (Ast)`
+- **Attributes:**
+  - `name: str` — Feature/parameter name.
+  - `value: Expression` — Feature/parameter value.
 
-### CircuitDef
-Represents a circuit definition (main circuit or subcircuit) containing:
-- `libs`: Library references
-- `includes`: Include file references  
-- `parameters`: Circuit parameters
-- `components`: Component instances
-- `connections`: Node connections
-- `formal_parameters`: Subcircuit formal parameters
+### `Lib (Ast)`
+- **Attributes:**
+  - `path: Span` — Path to library.
+  - `argument: Optional[Span]` — Optional arguments.
 
-### Expression
-Represents a parsed expression with parameter references and source span.
+### `Include (Ast)`
+- **Attributes:**
+  - `path: Span` — Path to included file.
 
-### Feature
-Represents a name=value parameter assignment.
+## Circuit Definition
 
-### Model
-Represents a model reference with name and source span.
+### `CircuitDef (Ast)`
+- **Attributes:**
+  - `name: str` — Circuit name.
+  - `libs: list[Lib]` — Library declarations.
+  - `includes: list[Include]` — Include declarations.
+  - `parameters: list[Feature]` — Parameter definitions.
+  - `components: list[Component]` — Components defined in the circuit.
+  - `connections: list[str]` — Connections (ports).
+  - `formal_parameters: list[Feature]` — Formal parameters.
 
-### Include
-Represents an `.include` directive with file path.
+## Passive Components
 
-### Lib
-Represents a `.lib` directive with file path and optional argument.
+### `Resistor (Component)`
+- `value: Expression`
+- `model: Optional[str]`
 
-## Component Types
+### `Capacitor (Component)`
+- `value: Optional[Expression]`
+- `model: Optional[str]`
 
-The module defines concrete component classes for all major SPICE component types:
+### `Inductor (Component)`
+- `value: Optional[Expression]`
+- `model: Optional[str]`
 
-### Passive Components
-- **Resistor** (`R`): Value and optional model
-- **Capacitor** (`C`): Value and optional model  
-- **Inductor** (`L`): Value and optional model
+### `CoupledInductors (Component)`
+- `value: Expression`
 
-### Active Components
-- **Diode** (`D`): Model and on/off state
-- **Bjt** (`Q`): Bipolar junction transistor with model and on/off state
-- **Jfet** (`J`): Junction FET with model, area, and on/off state
-- **Mosfet** (`M`): MOSFET with model and on/off state
-- **Mesfet** (`Z`): MESFET with model, area, and on/off state
+## Semiconductor Devices
 
-### Sources
-- **VoltageSource** (`V`): DC, AC, distortion, and transient stimulus values
-- **CurrentSource** (`I`): DC, AC, distortion, and transient stimulus values
+### `Diode (Component)`
+- `model: str`
+- `on: bool`
 
-### Controlled Sources
-- **Vcvs** (`E`): Voltage-controlled voltage source
-- **Cccs** (`F`): Current-controlled current source  
-- **Vccs** (`G`): Voltage-controlled current source
-- **Ccvs** (`H`): Current-controlled voltage source
+### `Bjt (Component)`
+- `model: str`
+- `on: bool`
 
-### Transmission Lines
-- **LosslessTransmissionLine** (`T`): Lossless transmission line
-- **LossyTransmissionLine** (`O`): Lossy transmission line
-- **SingleLossyTransmissionLine** (`Y`): Single lossy transmission line
-- **CoupledMulticonductorLine** (`P`): Coupled multiconductor line
-- **UniformRcLine** (`U`): Uniform RC line
+### `Mosfet (Component)`
+- `model: str`
+- `on: bool`
 
-### Other Components
-- **CoupledInductors** (`K`): Mutual inductors with coupling value
-- **SwitchVC** (`S`): Voltage-controlled switch
-- **SwitchCC** (`W`): Current-controlled switch
-- **Subcircuit** (`X`): Subcircuit instance
+### `Jfet (Component)`
+- `model: str`
+- `area: Optional[Expression]`
+- `on: bool`
 
-## Component Mapping
+### `Mesfet (Component)`
+- `model: str`
+- `area: Optional[Expression]`
+- `on: bool`
 
-The `component_map` dictionary maps SPICE component prefixes to their corresponding Python classes, enabling dynamic component parsing based on the first letter of the component name.
+## Sources
 
-## Postponed Components
+### `VoltageSource (Component)`
+- `dc_value: Optional[Expression]`
+- `ac_magnitude: Optional[Expression]`
+- `ac_phase: Optional[Expression]`
+- `distortion_f1: DistortionTerm`
+- `distortion_f2: DistortionTerm`
+- `transient_value: Optional[Expression]`
 
-The following component types are defined but not yet implemented:
-- **XSpiceCodeModel**: XSPICE code model devices
-- **BehaviouralSource**: Behavioral sources  
-- **VerilogDevice**: Verilog-A devices
+### `CurrentSource (Component)`
+- `dc_value: Optional[Expression]`
+- `ac_magnitude: Optional[Expression]`
+- `ac_phase: Optional[Expression]`
+- `distortion_f1: DistortionTerm`
+- `distortion_f2: DistortionTerm`
+- `transient_value: Optional[Expression]`
+
+### `DistortionTerm`
+- `magnitude: Optional[Expression]`
+- `phase: Optional[Expression]`
+
+## Controlled Sources
+
+### `Vcvs (Component)`
+- `value: Expression`
+
+### `Vccs (Component)`
+- `value: Expression`
+
+### `Cccs (Component)`
+- `vnam: str`
+- `value: Expression`
+
+### `Ccvs (Component)`
+- `vnam: str`
+- `value: Expression`
+
+## Transmission Lines
+
+### `LosslessTransmissionLine (Component)`
+(no extra attributes)
+
+### `LossyTransmissionLine (Component)`
+- `model: str`
+
+### `SingleLossyTransmissionLine (Component)`
+- `model: str`
+
+### `UniformRcLine (Component)`
+- `model: str`
+
+### `CoupledMulticonductorLine (Component)`
+- `model: str`
+
+## Switches and Subcircuits
+
+### `SwitchVC (Component)`
+- `model: str`
+- `on: bool`
+
+### `SwitchCC (Component)`
+- `vnam: str`
+- `model: str`
+- `on: bool`
+
+### `Subcircuit (Component)`
+- `parent: str`
+
+## Placeholders (not yet implemented)
+
+- `XSpiceCodeModel (Component)`
+- `BehaviouralSource (Component)`
+- `VerilogDevice (Component)`
