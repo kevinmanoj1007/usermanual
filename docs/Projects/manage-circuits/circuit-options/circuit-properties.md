@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Circuit Properties and Management
+# Circuit Properties
 
 The website provides an interface to create, manage, and share circuit information through three main actions: **defining properties, uploading circuits, and importing/exporting circuits**.
 
