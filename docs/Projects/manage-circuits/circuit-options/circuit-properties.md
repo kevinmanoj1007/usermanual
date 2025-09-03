@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Circuit Properties 
+# Circuit Properties and Management
 
 The website provides an interface to create, manage, and share circuit information through three main actions: **defining properties, uploading circuits, and importing/exporting circuits**.
 
@@ -44,11 +44,26 @@ At the top right of this page, you will also find the **Import Circuit** button,
 
 When you click **Import Circuit**, a dialog box appears. This dialog enables you to import a previously exported circuit by filling in the following details:
 
-- **Circuit Name**: Enter a name for the imported circuit.
-- **Tool**: Select the appropriate simulation tool from the dropdown.
-- **Circuit Export File**: Drag and drop the `.zip` export file (the file generated during export).
+- **Circuit Name:** Enter a name for the imported circuit.
+- **Tool:** Select the appropriate simulation tool from the dropdown.
+- **Circuit Export File:** Drag and drop the **.zip** export file (the file generated during export).
 
 At the bottom of the dialog, you can either:
 
-- **Cancel**: Close the dialog without importing.
-- **Proceed**: Confirm and import the circuit into the system.
+- **Save Circuit:** Save the imported circuit.
+- **Cancel:** Exit the dialog without saving.
+
+## Export Circuit
+
+The **Export Circuit** option allows you to export an existing circuit and all its supporting files into a single **.zip** package. This makes it easy to share or re-import later.
+
+When exporting, the following circuit data is included:
+
+- Circuit Name
+- Tool
+- Description
+- Circuit Schematic
+- Circuit Dependencies
+- Circuit Image
+
+The exported **.zip** file can then be re-imported using the **Import Circuit** feature.
