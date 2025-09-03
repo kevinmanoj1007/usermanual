@@ -185,7 +185,6 @@ class VerilogDevice(Component):
 |------|------------|-------------|
 | `VoltageSource` | `dc_value, ac_magnitude, ac_phase, distortion_f1, distortion_f2, transient_value` | Voltage source with DC, AC, distortion, and transient specifications. |
 | `CurrentSource` | `dc_value, ac_magnitude, ac_phase, distortion_f1, distortion_f2, transient_value` | Current source with DC, AC, distortion, and transient specifications. |
-| `DistortionTerm` | `magnitude: Optional[Expression], phase: Optional[Expression]` | Distortion term with optional magnitude and phase. |
 
 ## Controlled Sources
 
