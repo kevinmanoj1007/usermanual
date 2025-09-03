@@ -3,7 +3,7 @@
 Parses SPICE netlists into structured AST representations.
 
 ```py
-class SpiceParser(BaseModel):
+class SpiceParser:
     delims: dict[SpiceTokenKind, SpiceTokenKind]
     lexer: SpiceLexer
     tokens: list[SpiceToken]
