@@ -57,13 +57,6 @@ At the bottom of the dialog, you can either:
 
 The **Export Circuit** option allows you to export an existing circuit and all its supporting files into a single **.zip** package. This makes it easy to share or re-import later.
 
-When exporting, the following circuit data is included:
 
-- Circuit Name
-- Tool
-- Description
-- Circuit Schematic
-- Circuit Dependencies
-- Circuit Image
 
 The exported **.zip** file can then be re-imported using the **Import Circuit** feature.
