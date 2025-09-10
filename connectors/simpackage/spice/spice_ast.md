@@ -2,30 +2,67 @@
 
 The `spice_ast` module defines the Abstract Syntax Tree (AST) structures for SPICE netlists. Each element of a SPICE circuit (components, sources, subcircuits, etc.) is represented as a class with relevant attributes.
 
+## Base Classes
+
+### Ast
+Base class for all AST elements.
+
 ```py
 class Ast(BaseModel):
     pass
+```
 
+### Component
+Base class for circuit components with name, connections, and features.
+
+```py
 class Component(Ast):
     name: str
     connections: list[str]
     features: list[Feature]
+```
 
+### Expression
+Represents expressions with referenced identifiers and source span.
+
+```py
 class Expression(Ast):
     references: set[str]
     span: Span
+```
 
+### Feature
+Represents a feature/parameter with name and value.
+
+```py
 class Feature(Ast):
     name: str
     value: Expression
+```
 
+### Lib
+Library declaration with path and optional arguments.
+
+```py
 class Lib(Ast):
     path: Span
     argument: Optional[Span]
+```
 
+### Include
+Include declaration with file path.
+
+```py
 class Include(Ast):
     path: Span
+```
 
+## Circuit Definition
+
+### CircuitDef
+Complete circuit definition with name, libraries, includes, parameters, components, connections, and formal parameters.
+
+```py
 class CircuitDef(Ast):
     name: str
     libs: list[Lib]
@@ -34,44 +71,100 @@ class CircuitDef(Ast):
     components: list[Component]
     connections: list[str]
     formal_parameters: list[Feature]
+```
 
+## Passive Components
+
+### Resistor
+Resistor component with value and optional model.
+
+```py
 class Resistor(Component):
     value: Expression
     model: Optional[str]
+```
 
+### Capacitor
+Capacitor component with optional value and model.
+
+```py
 class Capacitor(Component):
     value: Optional[Expression]
     model: Optional[str]
+```
 
+### Inductor
+Inductor component with optional value and model.
+
+```py
 class Inductor(Component):
     value: Optional[Expression]
     model: Optional[str]
+```
 
+### CoupledInductors
+Coupled inductors component with coupling value.
+
+```py
 class CoupledInductors(Component):
     value: Expression
+```
 
+## Semiconductor Devices
+
+### Diode
+Diode component with model name and on/off state.
+
+```py
 class Diode(Component):
     model: str
     on: bool
+```
 
+### Bjt
+Bipolar junction transistor with model and state.
+
+```py
 class Bjt(Component):
     model: str
     on: bool
+```
 
+### Mosfet
+MOSFET component with model and state.
+
+```py
 class Mosfet(Component):
     model: str
     on: bool
+```
 
+### Jfet
+JFET component with model, optional area, and state.
+
+```py
 class Jfet(Component):
     model: str
     area: Optional[Expression]
     on: bool
+```
 
+### Mesfet
+MESFET component with model, optional area, and state.
+
+```py
 class Mesfet(Component):
     model: str
     area: Optional[Expression]
     on: bool
+```
 
+## Sources
+
+### VoltageSource
+Voltage source with DC, AC, distortion, and transient specifications.
+
+```py
 class VoltageSource(Component):
     dc_value: Optional[Expression]
     ac_magnitude: Optional[Expression]
@@ -79,7 +172,12 @@ class VoltageSource(Component):
     distortion_f1: DistortionTerm
     distortion_f2: DistortionTerm
     transient_value: Optional[Expression]
+```
 
+### CurrentSource
+Current source with DC, AC, distortion, and transient specifications.
+
+```py
 class CurrentSource(Component):
     dc_value: Optional[Expression]
     ac_magnitude: Optional[Expression]
@@ -87,136 +185,146 @@ class CurrentSource(Component):
     distortion_f1: DistortionTerm
     distortion_f2: DistortionTerm
     transient_value: Optional[Expression]
+```
 
+### DistortionTerm
+Distortion term with magnitude and phase components.
+
+```py
 class DistortionTerm(BaseModel):
     magnitude: Optional[Expression]
     phase: Optional[Expression]
+```
 
+## Controlled Sources
+
+### Vcvs
+Voltage-controlled voltage source.
+
+```py
 class Vcvs(Component):
     value: Expression
+```
 
+### Vccs
+Voltage-controlled current source.
+
+```py
 class Vccs(Component):
     value: Expression
+```
 
+### Cccs
+Current-controlled current source with controlling voltage name.
+
+```py
 class Cccs(Component):
     vnam: str
     value: Expression
+```
 
+### Ccvs
+Current-controlled voltage source with controlling voltage name.
+
+```py
 class Ccvs(Component):
     vnam: str
     value: Expression
+```
 
+## Transmission Lines
+
+### LosslessTransmissionLine
+Lossless transmission line component.
+
+```py
 class LosslessTransmissionLine(Component):
     pass
+```
 
+### LossyTransmissionLine
+Lossy transmission line with model.
+
+```py
 class LossyTransmissionLine(Component):
     model: str
+```
 
+### SingleLossyTransmissionLine
+Single lossy transmission line with model.
+
+```py
 class SingleLossyTransmissionLine(Component):
     model: str
+```
 
+### UniformRcLine
+Uniform RC line with model.
+
+```py
 class UniformRcLine(Component):
     model: str
+```
 
+### CoupledMulticonductorLine
+Coupled multiconductor line with model.
+
+```py
 class CoupledMulticonductorLine(Component):
     model: str
+```
 
+## Switches and Subcircuits
+
+### SwitchVC
+Voltage-controlled switch with model and state.
+
+```py
 class SwitchVC(Component):
     model: str
     on: bool
+```
 
+### SwitchCC
+Current-controlled switch with controlling voltage, model, and state.
+
+```py
 class SwitchCC(Component):
     vnam: str
     model: str
     on: bool
-
-class Subcircuit(Component):
-    parent: str
-
-class XSpiceCodeModel(Component):
-    pass
-
-class BehaviouralSource(Component):
-    pass
-
-class VerilogDevice(Component):
-    pass
 ```
 
-## Base Classes
+### Subcircuit
+Subcircuit instance with parent reference.
 
-| Name | Description |
-|------|-------------|
-| `Ast` | Base class for all AST elements. |
-| `Component` | Base class for circuit components with name, connections, and features. |
-| `Expression` | Represents expressions with referenced identifiers and source span. |
-| `Feature` | Represents a feature/parameter with name and value. |
-| `Lib` | Library declaration with path and optional arguments. |
-| `Include` | Include declaration with file path. |
-
-## Circuit Definition
-
-| Name | Type | Description |
-|------|------|-------------|
-| `CircuitDef` | `Ast` | Complete circuit definition with name, libraries, includes, parameters, components, connections, and formal parameters. |
-
-## Passive Components
-
-| Name | Attributes | Description |
-|------|------------|-------------|
-| `Resistor` | `value: Expression, model: Optional[str]` | Resistor component with value and optional model. |
-| `Capacitor` | `value: Optional[Expression], model: Optional[str]` | Capacitor component with optional value and model. |
-| `Inductor` | `value: Optional[Expression], model: Optional[str]` | Inductor component with optional value and model. |
-| `CoupledInductors` | `value: Expression` | Coupled inductors component with coupling value. |
-
-## Semiconductor Devices
-
-| Name | Attributes | Description |
-|------|------------|-------------|
-| `Diode` | `model: str, on: bool` | Diode component with model name and on/off state. |
-| `Bjt` | `model: str, on: bool` | Bipolar junction transistor with model and state. |
-| `Mosfet` | `model: str, on: bool` | MOSFET component with model and state. |
-| `Jfet` | `model: str, area: Optional[Expression], on: bool` | JFET component with model, optional area, and state. |
-| `Mesfet` | `model: str, area: Optional[Expression], on: bool` | MESFET component with model, optional area, and state. |
-
-## Sources
-
-| Name | Attributes | Description |
-|------|------------|-------------|
-| `VoltageSource` | `dc_value, ac_magnitude, ac_phase, distortion_f1, distortion_f2, transient_value` | Voltage source with DC, AC, distortion, and transient specifications. |
-| `CurrentSource` | `dc_value, ac_magnitude, ac_phase, distortion_f1, distortion_f2, transient_value` | Current source with DC, AC, distortion, and transient specifications. |
-
-## Controlled Sources
-
-| Name | Attributes | Description |
-|------|------------|-------------|
-| `Vcvs` | `value: Expression` | Voltage-controlled voltage source. |
-| `Vccs` | `value: Expression` | Voltage-controlled current source. |
-| `Cccs` | `vnam: str, value: Expression` | Current-controlled current source with controlling voltage name. |
-| `Ccvs` | `vnam: str, value: Expression` | Current-controlled voltage source with controlling voltage name. |
-
-## Transmission Lines
-
-| Name | Attributes | Description |
-|------|------------|-------------|
-| `LosslessTransmissionLine` | | Lossless transmission line component. |
-| `LossyTransmissionLine` | `model: str` | Lossy transmission line with model. |
-| `SingleLossyTransmissionLine` | `model: str` | Single lossy transmission line with model. |
-| `UniformRcLine` | `model: str` | Uniform RC line with model. |
-| `CoupledMulticonductorLine` | `model: str` | Coupled multiconductor line with model. |
-
-## Switches and Subcircuits
-
-| Name | Attributes | Description |
-|------|------------|-------------|
-| `SwitchVC` | `model: str, on: bool` | Voltage-controlled switch with model and state. |
-| `SwitchCC` | `vnam: str, model: str, on: bool` | Current-controlled switch with controlling voltage, model, and state. |
-| `Subcircuit` | `parent: str` | Subcircuit instance with parent reference. |
+```py
+class Subcircuit(Component):
+    parent: str
+```
 
 ## Placeholders
 
-| Name | Description |
-|------|-------------|
-| `XSpiceCodeModel` | XSpice code model component (not yet implemented). |
-| `BehaviouralSource` | Behavioural source component (not yet implemented). |
-| `VerilogDevice` | Verilog device component (not yet implemented). |
+### XSpiceCodeModel
+XSpice code model component (not yet implemented).
+
+```py
+class XSpiceCodeModel(Component):
+    pass
+```
+
+### BehaviouralSource
+Behavioural source component (not yet implemented).
+
+```py
+class BehaviouralSource(Component):
+    pass
+```
+
+### VerilogDevice
+Verilog device component (not yet implemented).
+
+```py
+class VerilogDevice(Component):
+    pass
+```
