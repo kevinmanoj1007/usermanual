@@ -33,3 +33,18 @@ The optimization loop broadly follows the following sequence in the ADK's execut
     Also **save the agent models** if optimization was not run in inference, and the total reward over the
     episode was higher than any of the previous episodes.
     + Repeat until optimization stops.
+
+## Preprocessing in the Optimization Loop
+
+Preprocessing happens both **at the beginning** of optimization and **continuously** during optimization. The executor integrates preprocessing as follows:
+
+1. **Environment reset**
+   * The initial observation and info are passed through process_env_reset.
+2. **Before agent/environment interaction**
+   * Agent data is passed through process_agent_data.
+   * Specifications are passed through process_specification.
+   * Step data is passed through process_agent_step_data.
+3. **After environment step**
+   * The observation, reward, termination flags, and info are passed through process_env_step.
+
+This ensures that preprocessing is consistently applied whenever the agent interacts with the environment.

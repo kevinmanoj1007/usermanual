@@ -20,6 +20,10 @@ this directory is not enforced by the ADK, it is highly recommended.
 
 + `.env`: A file containing the API key to the AsterQuanta platform, among other configuration. **Mandatorily required.**
 
+:::note
+On Unix-based operating systems (Linux, macOS), `.env` files are hidden by default and may not be visible in file explorers without enabling the display of hidden files.
+:::
+
 + `logging.conf`: Logging configuration for the ADK. **Mandatorily required.**
 
 Run `genie setup` in an empty directory and follow the instructions in order to conveniently create
