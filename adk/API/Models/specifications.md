@@ -13,7 +13,7 @@ class Specification(BaseModel):
     targets: dict[str, Target]
     genie_model: GenieModel
     env_parameters: EnvParameters
-    graphs: list[Graph]
+    networkx.graphs: list[Graph]
     raw_representations: list[Any] 
 
     observe_world: Callable[[], dict]
@@ -59,7 +59,7 @@ class Specification(BaseModel):
 &nbsp;
 
 - ### `observe_features: Callable[[], dict]`
-    + **Description**: A callable function returning a dictionary of extracted features from the environment or system for agent use.
+    + **Description**: A callable function returning a dictionary of extracted features from the environment or system for agent use. Every element in the dictionary corresponds to a single node in the networkx graph (`specifications.graph`).
 
 &nbsp;
 
