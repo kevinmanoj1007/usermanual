@@ -13,7 +13,7 @@ class Specification(BaseModel):
     targets: dict[str, Target]
     genie_model: GenieModel
     env_parameters: EnvParameters
-    networkx.graphs: list[Graph]
+    graphs: list[networkx.Graph]
     raw_representations: list[Any] 
 
     observe_world: Callable[[], dict]
