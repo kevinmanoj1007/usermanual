@@ -18,17 +18,17 @@ contents:
 + `models/`: A directory containing agent specific model files (NN checkpoints, stats, etc.),
 completely controlled by the developer.
 
-+ `hyper_parameters.json`: A file containing the hyper-parameters for the agent's training / the
-hyper-parameters the agent was trained with. See [Hyper Parameters](../API/Models/hyper-parameters.md)
++ `hyper_parameters.json`: A file containing the [hyper parameters](adk\API\Models\hyper-parameters.md) for the agent's training / the
+hyper parameters the agent was trained with. See [Hyper Parameters](../API/Models/hyper-parameters.md)
 for more info.
 
-+ `metadata.json`: A file containing the model metadata. See [Metadata](../API/Models/metadata.md)
++ `metadata.json`: A file containing the model [metadata](adk\API\Models\metadata.md). See [Metadata](../API/Models/metadata.md)
 for more info.
 
-+ `target_specifications.json`: A file containing the target specifications that can be defined
++ `target_specifications.json`: A file containing the [target specifications](adk\API\Models\target-specifications.md) that can be defined
 for the model. See [Target Specifications](../API/Models/target-specifications.md) for more info.
 
-+ `world_control_specifications.json`: A file containing the world controls (**controllable parameters**
++ `world_control_specifications.json`: A file containing the [world controls](adk\API\Models\world-controls.md) (**controllable parameters**
 of the system) that the model can optimize for. See [World Controls](../API/Models/world-controls.md)
 for more info.
 
@@ -48,4 +48,4 @@ the model appear in the platform's model selection dialogue.
 The `model` sub-command for `genie` provides a convenient interface for adding, listing,
 registering and committing an agent's models, run `genie model` for more info.
 
-[Transfer Learning](./transfer-learning.md) is a section under the Genie tab’s Agent area that allows users to configure model-specific settings through the Model Details page. It includes three sub-sections: Details (showing model name and description), Design Parameter Specification (where users map controllable parameters to model-trained specifications), and Target Specifications (defining output parameters, precision targets, and mapping expressions to model-defined targets). Once configured, users can initiate model transfer into the project environment.
+[Transfer Learning](./transfer-learning.md) is a section under the Genie tab's Agent area that allows users to configure model-specific settings through the Model Details page. It includes three sub-sections: Details (showing model name and description), Design Parameter [Specification](adk\API\Models\specifications.md) (where users map controllable parameters to model-trained specifications), and [Target Specifications](adk\API\Models\target-specifications.md) (defining output parameters, precision targets, and mapping expressions to model-defined targets). Once configured, users can initiate model transfer into the project environment.

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 7
 ---
 
 # Environments
@@ -10,13 +10,13 @@ uses heavily. Such use is mostly limited to the [Gymnasium](https://gymnasium.fa
 framework in the ADK's default environments. Users are, however, free to use their own environment
 framework of choice as use of Gymnasium is not enforced or required.
 
-An environment is in charge of converting an optimization specification and abstracting it to an RL
+An environment is in charge of converting an optimization [specification](adk\API\Models\specifications.md) and abstracting it to an RL
 specification. This includes handling reward computation logic, action logic, constructing the
 observation space and handling interaction with the system itself.
 
 ## Creating an environment
 A [Base Agent](../API/base-agent.md) provides a default `_make_env()` function to convert
-optimization specifications into environment data (environment specifications) that can be used
+optimization specifications into [environment data](adk\API\Models\environment-data.md) (environment specifications) that can be used
 to initialize a completely custom environment or one of the following default environment
 implementations provided with the ADK alike:
 1. `"Ai4EE-Direct-Action-Env"`: See [DirectActionEnv](../API/Environments/direct-action-env.md).

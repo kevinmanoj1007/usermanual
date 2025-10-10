@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 title: "Hyper Parameters"
 ---
 
@@ -8,7 +8,7 @@ title: "Hyper Parameters"
 Hyperparameters are configurable values set before training a model that govern the learning
 process and affect its performance. Also useful as a reference to continue training or for
 fine-tuning after initial training run(s). In the context of loading,
-[Genie Models](/docs/API/Models/genie-model) from `JSON` files, `hyperparameters` are represented
+[Genie Models](adk\API\Models\genie-model.md) from `JSON` files, `hyperparameters` are represented
 as key-value pairs within a dictionary.
 
 
@@ -22,7 +22,10 @@ hyperparameters: dict[str, Any]
 An example of how to setup the values.
 :::note
 Note: There are no restrictions on how this object can be structured, and it is the developer's
-responsibility to interpret and handle the structure accordingly.
+responsibility to interpret and handle the structure accordingly. However, this object SHOULD contain
+configuration parameters that control the learning process, such as learning rates, batch sizes,
+discount factors, and other training-specific settings that remain constant during a training run
+but may be adjusted between runs for optimization or experimentation.
 :::
 ```json title="models/<Model Name>/hyper_parameters.json"
 {

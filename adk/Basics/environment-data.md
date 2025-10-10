@@ -1,12 +1,12 @@
 ---
-sidebar_position: 6
+sidebar_position: 8
 ---
 
 # Environment Data
 ## Explanation
 Environment Data is a data structure containing all the data generally required for most environment
 implementations to optimize a system. It is a data structure that is a special excerpt of a
-[Specification](specifications.md). Environment data contains the following information:
+[Specification](adk\API\Models\specifications.md). Environment data contains the following information:
 + **World Control Space**: The space of the controllable parameters of the system.
 
 + **Targets**: The actual targets that are to be optimized for.
@@ -22,7 +22,7 @@ implementations to optimize a system. It is a data structure that is a special e
 + **Default Selected Environment Parameters**: The default starting state of the stochastic
 parameters.
 
-+ **Target Specifications**: The target specifications of the model selected to optimize the system.
++ **[Target Specifications](adk\API\Models\target-specifications.md)**: The target specifications of the model selected to optimize the system.
 
 
 + **Step System (routine)**: Method regarding how the system's controllable parameters are to be set

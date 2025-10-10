@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 
@@ -7,14 +7,14 @@ sidebar_position: 5
 ## Explanation
 A specification is a data structure containing all the data required for an agent-environment pair
 to optimize a system. This includes the following information:
-+ **Design Parameters / World Controls**: Information regarding the controllable parameters of the system
++ **Design Parameters / [World Controls](adk\API\Models\world-controls.md)**: Information regarding the controllable parameters of the system
 and the restrictions placed on them that must be adhered to as it is optimized.
 
 + **Targets**: Information regarding the criteria that must be optimized for and the restrictions
 within which the system is considered optimized.
 
-+ **Genie Model**: Information regarding the model that was selected for the optimization. This includes
-the hyper parameters, metadata, target specifications and world control specifications. See
++ **[Genie Model](adk\API\Models\genie-model.md)**: Information regarding the model that was selected for the optimization. This includes
+the [hyper parameters](adk\API\Models\hyper-parameters.md), [metadata](adk\API\Models\metadata.md), [target specifications](adk\API\Models\target-specifications.md) and [world control](adk\API\Models\world-controls.md) specifications. See
 [Models](models.md) for more info.
 
 + **Observe System (routine)**: Method regarding how the system's measurable parameters are to be

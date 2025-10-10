@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+sidebar_position: 4
 ---
 
 # Transfer Learning
@@ -15,7 +15,7 @@ This section presents basic information about the model:
 ### 2. Design Parameter Specification
 
 In this section, users can:
-- **Map Controllable Parameters** – Map specific controllable parameters to the specifications the model was trained on.  
+- **Map Controllable Parameters** – Map specific controllable parameters to the [specifications](adk\API\Models\specifications.md) the model was trained on.  
 
 Each controllable parameter is linked to a particular model, ensuring an accurate optimization setup.
 
@@ -24,6 +24,6 @@ Each controllable parameter is linked to a particular model, ensuring an accurat
 This section outlines the expected outputs and objectives of the model:
 - **Observation Space Parameters** – Defines the output variables being monitored during the optimization.
 - **List of Precisions** – Includes specific precision targets for the output parameters.
-- **Map Target Expressions** – Users must also map each expression to the target specification defined by the model, similar to how it's done in the design parameter section.  
+- **Map Target Expressions** – Users must also map each expression to the [target specification](adk\API\Models\target-specifications.md) defined by the model, similar to how it's done in the design parameter section.  
 
 After reviewing or editing these settings, users can proceed by clicking the **Initiate model transfer** button to begin transferring the model to the current project environment for optimization.

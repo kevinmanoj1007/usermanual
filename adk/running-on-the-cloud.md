@@ -1,8 +1,8 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
-# Running on the cloud
+# Running on the Cloud
 After following the [quick start](getting-started#quick-start), you should now have an agent up on the platform,
 you can see this if you click on the agent selection dialogue in the **Genie** tab of any project:
 

@@ -3,7 +3,7 @@ sidebar_position: 1
 ---
 
 
-# Getting started
+# Getting Started
 Let's get started with the **ADK in less than 10 minutes**.
 
 
