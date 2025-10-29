@@ -1,93 +1,87 @@
 ---
+title: EnvData
+description: Data class encapsulating environment configuration and agent-environment interaction parameters
 sidebar_position: 6
-title: "Environment Data"
 ---
 
-# class EnvData
-A data class encapsulating environment configuration, control spaces, observation and evaluation callables, and other parameters necessary for agent-environment interaction.
+# EnvData
+
+A data class encapsulating environment configuration, control spaces, default control values, observation spaces, target spaces, and other parameters necessary for agent–environment interaction.
 
 ## Definition
-```py
+
+```python
 class EnvData(BaseModel):
-    world_control_space: Box
-    targets: dict[str, Target]
-    env_var_sampling_spaces: list[Discrete]
-    world_observation_space: Box
-    env_parameters: EnvParameters
-    default_world_controls: Actions
-    default_selected_env_parameters: list
-    target_specifications: list[TargetSpec]
+    static_world_controls_space: gym.spaces.Dict
+    optimized_world_controls_space: gym.spaces.Dict
+    randomized_world_controls_space: gym.spaces.Dict
 
-    step_world: StepWorldCb
-    observe_world: Callable[[], dict]
-    observe_features: Callable[[], dict]
-    evaluate_expression: Callable[[Target, Observations], RuntimeValue]
+    default_static_world_controls: dict[str, DesignParamValue]
+    default_optimized_world_controls: dict[str, DesignParamValue]
+    default_randomized_world_controls: dict[str, DesignParamValue]
 
-    specifics: dict[str, Any]
+    world_observations_space: gym.spaces.Dict
+    default_world_observations: dict[str, ObservationValue]
+
+    targets_space: gym.spaces.Dict
+
+    step_world: StepWorldCB
+
+    optimization_data: OptimizationData
+
+    extra: dict[str, Any]
+
+    model_config = ConfigDict(
+        arbitrary_types_allowed=True
+    )
 ```
 
 ## Members
-- ### `world_control_space: Box`
-    + **Description**: Defines the continuous action space available for world control, represented by a Box.
 
-&nbsp;
+### `static_world_controls_space: gym.spaces.Dict`
 
-- ### `targets: dict[str, Target]`
-    + **Description**: A dictionary mapping target names to Target objects specifying optimization or achievement goals.
+Defines the space of static world controls — parameters that remain fixed during execution unless explicitly changed.
 
-&nbsp;
+### `optimized_world_controls_space: gym.spaces.Dict`
 
-- ### `env_var_sampling_spaces: list[Discrete]`
-    + **Description**: A list of discrete spaces representing sampling spaces for environment variables.
+Defines the space of optimized world controls — parameters that the optimization loop is allowed to modify in order to improve performance or meet targets.
 
-&nbsp;
+### `randomized_world_controls_space: gym.spaces.Dict`
 
-- ### `world_observation_space: Box`
-    + **Description**: Defines the continuous observation space representing what the agent can observe from the world.
+Defines the space of randomized world controls — parameters that are sampled randomly for variability or stochasticity during environment runs.
 
-&nbsp;
+### `default_static_world_controls: dict[str, DesignParamValue]`
 
-- ### `env_parameters: EnvParameters`
-    + **Description**: Contains environment-specific parameters necessary for simulation or modeling.
+Default values for static world controls used when no explicit static control values are provided.
 
-&nbsp;
+### `default_optimized_world_controls: dict[str, DesignParamValue]`
 
-- ### `default_world_controls: Actions`
-    + **Description**: Default set of actions or controls applied to the world when no other input is provided.
+Default values for optimized world controls before any optimization process modifies them.
 
-&nbsp;
+### `default_randomized_world_controls: dict[str, DesignParamValue]`
 
-- ### `default_selected_env_parameters: list`
-    + **Description**: A list representing default selected environment parameters.
+Default values for randomized world controls, used as baseline values before random sampling is applied.
 
-&nbsp;
+### `world_observations_space: gym.spaces.Dict`
 
-- ### `target_specifications: list[TargetSpec]`
-    + **Description**: A list of target specifications detailing what the agent aims to achieve or optimize.
+Defines the dictionary-based observation space specifying which world variables can be observed and their valid ranges or types.
 
-&nbsp;
+### `default_world_observations: dict[str, ObservationValue]`
 
-- ### `step_world: StepWorldCb`
-    + **Description**: A callback function to advance the environment state by one step.
+A dictionary containing default observation values, used as an initial or fallback representation of the world's observable state.
 
-&nbsp;
+### `targets_space: gym.spaces.Dict`
 
-- ### `observe_world: Callable[[], dict]`
-    + **Description**: A callable function that, when invoked, returns a dictionary capturing the current observable state of the world/environment.
+Defines the space of target variables or metrics that the environment or optimization process aims to evaluate.
 
-&nbsp;
+### `step_world: StepWorldCB`
 
-- ### `observe_features: Callable[[], dict]`
-    + **Description**: A callable function returning a dictionary of extracted features from the environment or system for agent use.
+A callback function responsible for advancing the environment by one step, updating world state and observations.
 
-&nbsp;
+### `optimization_data: OptimizationData`
 
-- ### `evaluate_expression: Callable[[Target, Observations], RuntimeValue]`
-    + **Description**: A callable function that evaluates a given target against observations and returns a runtime value indicating performance or reward.
+Contains optimization-related information such as current optimization state, parameters, intermediate results, and metadata used by the optimization loop.
 
-&nbsp;
+### `extra: dict[str, Any]`
 
-- ### `specifics: dict[str, Any]`
-    + **Description**: A dictionary containing specifics loaded from a Genie-model, providing additional model-dependent data.
-
-&nbsp;
+A dictionary for storing additional model-specific or environment-specific metadata, extensions, or configuration parameters.

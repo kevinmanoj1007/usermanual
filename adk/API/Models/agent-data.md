@@ -1,25 +1,26 @@
 ---
+title: AgentData
+description: Data class representing the agent's optimization-related state
 sidebar_position: 5
-title: "Agent Data"
 ---
 
-# class AgentData
-A data class representing the agent's operational mode and the associated Genie model.
+# AgentData
+
+A data class representing the agent's optimization-related state.
 
 ## Definition
-```py
+
+```python
 class AgentData(BaseModel):
-    inference: bool
-    genie_model: GenieModel
+    optimization_data: OptimizationData
+
+    model_config = ConfigDict(
+        arbitrary_types_allowed=True
+    )
 ```
 
 ## Members
-- ### `inference: bool`
-    + **Description**: A boolean indicating if the agent is running in inference mode (True) or not (False).
 
-&nbsp;
+### `optimization_data: OptimizationData`
 
-- ### `genie_model: GenieModel`
-    + **Description**: Holds the GenieModel instance that defines the model's hyperparameters, metadata, target specifications, and world control specifications used by the agent.
-
-&nbsp;
+Contains all optimization-related information for the agent. This includes the optimization state, parameters, intermediate results, and any data structures required for running or managing the optimization loop.
